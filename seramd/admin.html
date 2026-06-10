@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Seramd | Email Dashboard</title>
+    <link rel="stylesheet" href="./admin.css" />
+  </head>
+  <body>
+    <main class="dashboard-shell">
+      <aside class="sidebar">
+        <a class="brand" href="./index.html">
+          <span class="brand-mark">S</span>
+          <span>Seramd</span>
+        </a>
+        <nav aria-label="Admin">
+          <a class="active" href="#captures">Captured emails</a>
+          <a href="#email-dashboard">Inbox</a>
+          <a href="./index.html">Public site</a>
+        </nav>
+        <p class="sidebar-note">Domain email is saved automatically into the Inbox.</p>
+      </aside>
+
+      <section class="dashboard-main" aria-labelledby="dashboard-title">
+        <header class="dashboard-header">
+          <div>
+            <p class="eyebrow">Admin</p>
+            <h1 id="dashboard-title">Seramd email operations</h1>
+            <p id="site-email">Loading site email...</p>
+          </div>
+          <button id="refresh" type="button">Refresh</button>
+        </header>
+
+        <section class="stats" aria-label="Email summary">
+          <article>
+            <span>Captured emails</span>
+            <strong id="total-count">0</strong>
+          </article>
+          <article>
+            <span>Auto messages</span>
+            <strong id="auto-count">0</strong>
+          </article>
+          <article>
+            <span>Inbox</span>
+            <strong id="inbox-count">0</strong>
+          </article>
+          <article>
+            <span>Sent / queued</span>
+            <strong id="outbound-count">0</strong>
+          </article>
+        </section>
+
+        <section id="captures" class="section-block" aria-labelledby="captures-title">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">Part 1</p>
+              <h2 id="captures-title">Captured emails and auto messages</h2>
+              <p>Every waitlist submission appears here. New addresses automatically get a queued launch-list email.</p>
+            </div>
+            <input id="search" type="search" placeholder="Search captured emails" />
+          </div>
+
+          <div class="capture-grid">
+            <section class="panel contacts-panel" aria-label="Captured email list">
+              <div id="contact-list" class="contact-list"></div>
+            </section>
+
+            <section class="panel automation-panel" aria-labelledby="automation-title">
+              <div class="panel-header">
+                <div>
+                  <h3 id="automation-title">Auto-message template</h3>
+                  <p>This is queued when someone joins the waitlist.</p>
+                </div>
+              </div>
+              <div class="template-card">
+                <p class="template-label">Subject</p>
+                <strong>You're on the Seramd private launch list</strong>
+                <p class="template-label">Message</p>
+                <p>
+                  Thanks for joining the Seramd private launch list. We will send early access details as the beta opens.
+                </p>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section id="email-dashboard" class="section-block" aria-labelledby="email-dashboard-title">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">Part 2</p>
+              <h2 id="email-dashboard-title">Inbox and send email</h2>
+              <p>The Inbox saves domain email automatically. The send panel handles outgoing email.</p>
+            </div>
+          </div>
+
+          <div class="email-grid simple-email-grid">
+            <section class="panel inbox-panel" aria-labelledby="inbox-title">
+              <div class="panel-header">
+                <div>
+                  <h3 id="inbox-title">Inbox</h3>
+                  <p>Patient and waitlist email from the connected domain.</p>
+                </div>
+              </div>
+              <div id="inbox-list" class="inbox-list" aria-label="Inbox emails"></div>
+            </section>
+
+            <section class="panel send-panel" aria-labelledby="send-title">
+              <div class="panel-header">
+                <div>
+                  <h3 id="send-title">Send email</h3>
+                  <p>Choose a captured address or type any recipient.</p>
+                </div>
+              </div>
+              <form id="message-form" class="composer">
+                <label>
+                  Recipient
+                  <input id="recipient" name="email" type="email" list="captured-email-options" required />
+                </label>
+                <datalist id="captured-email-options"></datalist>
+                <label>
+                  Subject
+                  <input name="subject" type="text" maxlength="140" value="Seramd private beta update" required />
+                </label>
+                <label>
+                  Message
+                  <textarea name="body" rows="9" required>Thanks for joining the Seramd private launch list. We will send early access details as the beta opens.</textarea>
+                </label>
+                <button type="submit">Save outgoing email</button>
+                <p id="composer-note" class="form-note">Outgoing emails are saved locally and marked queued.</p>
+              </form>
+            </section>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="./admin.js"></script>
+  </body>
+</html>
