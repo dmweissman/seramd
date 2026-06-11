@@ -6,10 +6,11 @@
   "scripts": {
     "start": "npm run vite:build && node server.js",
     "dev": "npm run vite:build && node server.js",
+    "build": "vite build",
     "vite:dev": "vite",
     "vite:build": "vite build",
     "vite:preview": "vite preview",
-    "check": "node --check server.js && node --check script.js && node --check admin.js && tsc --noEmit"
+    "check": "node --check server.js && node --check script.js && node --check admin.js && node --check lib/waitlist.js && node --check api/_lib/util.js && node --check api/waitlist.js && node --check api/config.js && node --check api/inbox.js && node --check api/admin/waitlist.js && node --check api/admin/emails.js && node --check api/admin/messages.js && tsc --noEmit"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.9",

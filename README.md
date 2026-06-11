@@ -31,15 +31,31 @@ Vite settings:
 
 ```bash
 npm ci
-npm run vite:build
+npm run build
 ```
 
-The Vercel output directory is `dist`.
+The Vercel output directory is `dist`. The build also copies the admin
+dashboard (`admin.html`, `admin.css`, `admin.js`) into `dist`, and
+`vercel.json` rewrites `/admin` to it.
 
-This deploys the public Vite site. The local Node server still powers the
-waitlist API and `/admin` dashboard during local development; persistent
-production waitlist/admin storage on Vercel needs a serverless database-backed
-implementation.
+The waitlist/admin/inbox APIs are deployed as Vercel serverless functions from
+the `api/` directory. They store data in Upstash Redis, so production needs:
+
+1. An Upstash Redis database connected to the Vercel project (Vercel
+   Marketplace → Upstash). This provides `UPSTASH_REDIS_REST_URL` and
+   `UPSTASH_REDIS_REST_TOKEN` (the legacy `KV_REST_API_URL`/`KV_REST_API_TOKEN`
+   names are also accepted).
+2. `ADMIN_TOKEN` set in the Vercel project environment variables. The admin
+   API refuses all requests until it is set.
+3. Optionally `INBOX_EMAIL_TOKEN` (required before `POST /api/inbox` will
+   accept anything) and `SITE_EMAIL`.
+
+Until the Redis database is connected, the API responds with a clear 503
+error instead of silently failing. Messages composed in the admin dashboard
+are stored as "queued" records; no email-sending provider is wired in yet.
+
+The local Node server (`server.js`) still powers the same APIs during local
+development, using `data/*.json` files for storage.
 
 ## Checks
 
@@ -52,19 +68,23 @@ npm run vite:build
 
 ## Environment
 
-All environment variables are optional for local development.
-
 ```bash
 SITE_EMAIL=hello@seramd.com
-ADMIN_TOKEN=
+ADMIN_TOKEN=choose-a-secret
 INBOX_EMAIL_TOKEN=
 PORT=4173
 ```
 
 - `SITE_EMAIL`: email address displayed on the site and admin dashboard.
-- `ADMIN_TOKEN`: when set, admin API routes require `Authorization: Bearer <token>`.
-- `INBOX_EMAIL_TOKEN`: when set, `POST /api/inbox` requires `Authorization: Bearer <token>`.
+- `ADMIN_TOKEN`: required for the admin API. Routes under `/api/admin/*`
+  require `Authorization: Bearer <token>` and are disabled (503) until this is
+  set. The `/admin` dashboard prompts for the token on first load.
+- `INBOX_EMAIL_TOKEN`: required for `POST /api/inbox`, which is disabled (503)
+  until this is set.
 - `PORT`: local server port.
+
+The public site and waitlist signup work without any environment variables in
+local development; only the admin/inbox APIs require tokens.
 
 ## Runtime Data
 

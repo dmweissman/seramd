@@ -2,7 +2,12 @@ import { createServer } from "node:http";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
-import { randomUUID } from "node:crypto";
+
+import {
+  applyAdminMessage,
+  applyInboxEmail,
+  applyWaitlistSignup,
+} from "./lib/waitlist.js";
 
 const root = fileURLToPath(new URL(".", import.meta.url));
 const distRoot = join(root, "dist");
@@ -48,6 +53,15 @@ function readBody(request) {
   });
 }
 
+async function readJsonBody(request) {
+  const body = await readBody(request);
+  try {
+    return { payload: JSON.parse(body || "{}") };
+  } catch {
+    return { error: "Invalid JSON body." };
+  }
+}
+
 async function readJsonFile(filePath, fallback) {
   try {
     const file = await readFile(filePath, "utf8");
@@ -60,123 +74,53 @@ async function readJsonFile(filePath, fallback) {
   }
 }
 
-async function readWaitlist() {
-  return readJsonFile(waitlistFile, []);
+async function readStore() {
+  const [records, emails] = await Promise.all([
+    readJsonFile(waitlistFile, []),
+    readJsonFile(emailsFile, []),
+  ]);
+  return { records, emails };
 }
 
-async function readEmails() {
-  return readJsonFile(emailsFile, []);
-}
-
-async function writeWaitlist(records) {
+async function writeStore({ records, emails }) {
   await mkdir(dataDir, { recursive: true });
-  await writeFile(waitlistFile, `${JSON.stringify(records, null, 2)}\n`, "utf8");
+  await Promise.all([
+    writeFile(waitlistFile, `${JSON.stringify(records, null, 2)}\n`, "utf8"),
+    writeFile(emailsFile, `${JSON.stringify(emails, null, 2)}\n`, "utf8"),
+  ]);
 }
 
-async function writeEmails(records) {
-  await mkdir(dataDir, { recursive: true });
-  await writeFile(emailsFile, `${JSON.stringify(records, null, 2)}\n`, "utf8");
-}
+function requireBearerToken(request, response, token, missingMessage) {
+  if (!token) {
+    sendJson(response, 503, { error: missingMessage });
+    return false;
+  }
 
-function cleanEmail(value) {
-  return String(value || "").trim().toLowerCase();
-}
+  const header = request.headers.authorization || "";
+  if (header === `Bearer ${token}`) {
+    return true;
+  }
 
-function isValidEmail(value) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  sendJson(response, 401, { error: "Unauthorized" });
+  return false;
 }
 
 function requireAdmin(request, response) {
-  if (!adminToken) {
-    return true;
-  }
-
-  const header = request.headers.authorization || "";
-  if (header === `Bearer ${adminToken}`) {
-    return true;
-  }
-
-  sendJson(response, 401, { error: "Unauthorized" });
-  return false;
+  return requireBearerToken(
+    request,
+    response,
+    adminToken,
+    "Admin API is disabled: set the ADMIN_TOKEN environment variable to enable it.",
+  );
 }
 
 function requireInboxToken(request, response) {
-  if (!inboxEmailToken) {
-    return true;
-  }
-
-  const header = request.headers.authorization || "";
-  if (header === `Bearer ${inboxEmailToken}`) {
-    return true;
-  }
-
-  sendJson(response, 401, { error: "Unauthorized" });
-  return false;
-}
-
-function autoLaunchMessage(email) {
-  return {
-    id: randomUUID(),
-    direction: "outbound",
-    kind: "auto",
-    status: "queued",
-    from: siteEmail,
-    to: email,
-    subject: "You're on the Seramd private launch list",
-    body:
-      "Thanks for joining the Seramd private launch list. We will send early access details as the beta opens.",
-    createdAt: new Date().toISOString(),
-  };
-}
-
-async function persistInboxEmail(payload) {
-  const from = cleanEmail(payload.from || payload.sender || payload.email);
-  const subject = String(payload.subject || "").trim();
-  const body = String(payload.body || payload.text || payload.html || "").trim();
-  const to = cleanEmail(payload.to) || siteEmail;
-
-  if (!isValidEmail(from) || !subject || !body) {
-    return { error: "From, subject, and body are required." };
-  }
-
-  const [records, emails] = await Promise.all([readWaitlist(), readEmails()]);
-  const now = new Date().toISOString();
-  const inboxEmail = {
-    id: randomUUID(),
-    direction: "inbound",
-    kind: "inbox",
-    status: "received",
-    from,
-    to,
-    subject,
-    body,
-    createdAt: now,
-  };
-  let record = records.find((entry) => entry.email === from);
-
-  if (!record) {
-    record = {
-      id: randomUUID(),
-      email: from,
-      source: "domain-inbox",
-      status: "received",
-      autoMessageEnabled: false,
-      messageCount: 0,
-      createdAt: now,
-      lastSubmittedAt: now,
-      submissions: 0,
-    };
-    records.unshift(record);
-  }
-
-  record.messageCount = (record.messageCount || 0) + 1;
-  record.status = "received";
-  record.lastMessageAt = now;
-  record.lastMessage = inboxEmail;
-  emails.unshift(inboxEmail);
-
-  await Promise.all([writeWaitlist(records), writeEmails(emails)]);
-  return { record, email: inboxEmail };
+  return requireBearerToken(
+    request,
+    response,
+    inboxEmailToken,
+    "Inbox API is disabled: set the INBOX_EMAIL_TOKEN environment variable to enable it.",
+  );
 }
 
 async function handleApi(request, response, url) {
@@ -186,43 +130,22 @@ async function handleApi(request, response, url) {
   }
 
   if (request.method === "POST" && url.pathname === "/api/waitlist") {
-    const body = await readBody(request);
-    const payload = JSON.parse(body || "{}");
-    const email = cleanEmail(payload.email);
-
-    if (!isValidEmail(email)) {
-      sendJson(response, 400, { error: "Enter a valid email address." });
+    const { payload, error } = await readJsonBody(request);
+    if (error) {
+      sendJson(response, 400, { error });
       return true;
     }
 
-    const [records, emails] = await Promise.all([readWaitlist(), readEmails()]);
-    const existing = records.find((record) => record.email === email);
-    const now = new Date().toISOString();
-    let autoMessageQueued = false;
+    const store = await readStore();
+    const result = applyWaitlistSignup(store.records, store.emails, payload.email, siteEmail);
 
-    if (existing) {
-      existing.lastSubmittedAt = now;
-      existing.submissions = (existing.submissions || 1) + 1;
-    } else {
-      const autoMessage = autoLaunchMessage(email);
-      records.unshift({
-        id: randomUUID(),
-        email,
-        source: "coming-soon-waitlist",
-        status: "auto_queued",
-        autoMessageEnabled: true,
-        messageCount: 1,
-        createdAt: now,
-        lastSubmittedAt: now,
-        lastMessageAt: autoMessage.createdAt,
-        submissions: 1,
-      });
-      emails.unshift(autoMessage);
-      autoMessageQueued = true;
+    if (result.error) {
+      sendJson(response, 400, { error: result.error });
+      return true;
     }
 
-    await Promise.all([writeWaitlist(records), writeEmails(emails)]);
-    sendJson(response, 201, { ok: true, autoMessageQueued });
+    await writeStore(store);
+    sendJson(response, 201, { ok: true, autoMessageQueued: result.autoMessageQueued });
     return true;
   }
 
@@ -231,7 +154,7 @@ async function handleApi(request, response, url) {
       return true;
     }
 
-    const records = await readWaitlist();
+    const { records } = await readStore();
     sendJson(response, 200, { records, siteEmail });
     return true;
   }
@@ -241,53 +164,22 @@ async function handleApi(request, response, url) {
       return true;
     }
 
-    const payload = JSON.parse((await readBody(request)) || "{}");
-    const email = cleanEmail(payload.email);
-    const subject = String(payload.subject || "").trim();
-    const body = String(payload.body || "").trim();
-
-    if (!isValidEmail(email) || !subject || !body) {
-      sendJson(response, 400, { error: "Email, subject, and body are required." });
+    const { payload, error } = await readJsonBody(request);
+    if (error) {
+      sendJson(response, 400, { error });
       return true;
     }
 
-    const [records, emails] = await Promise.all([readWaitlist(), readEmails()]);
-    const now = new Date().toISOString();
-    let record = records.find((entry) => entry.email === email);
-    const message = {
-      id: randomUUID(),
-      direction: "outbound",
-      kind: "manual",
-      status: "queued",
-      from: siteEmail,
-      to: email,
-      subject,
-      body,
-      createdAt: now,
-    };
+    const store = await readStore();
+    const result = applyAdminMessage(store.records, store.emails, payload, siteEmail);
 
-    if (!record) {
-      record = {
-        id: randomUUID(),
-        email,
-        source: "admin-message",
-        status: "new",
-        messageCount: 0,
-        createdAt: now,
-        lastSubmittedAt: now,
-        submissions: 0,
-      };
-      records.unshift(record);
+    if (result.error) {
+      sendJson(response, 400, { error: result.error });
+      return true;
     }
 
-    record.messageCount = (record.messageCount || 0) + 1;
-    record.status = "queued";
-    record.lastMessageAt = now;
-    record.lastMessage = message;
-    emails.unshift(message);
-
-    await Promise.all([writeWaitlist(records), writeEmails(emails)]);
-    sendJson(response, 201, { ok: true, record, message });
+    await writeStore(store);
+    sendJson(response, 201, { ok: true, record: result.record, message: result.message });
     return true;
   }
 
@@ -296,7 +188,7 @@ async function handleApi(request, response, url) {
       return true;
     }
 
-    const [records, emails] = await Promise.all([readWaitlist(), readEmails()]);
+    const { records, emails } = await readStore();
     sendJson(response, 200, { records, emails, siteEmail });
     return true;
   }
@@ -306,15 +198,22 @@ async function handleApi(request, response, url) {
       return true;
     }
 
-    const payload = JSON.parse((await readBody(request)) || "{}");
-    const result = await persistInboxEmail(payload);
+    const { payload, error } = await readJsonBody(request);
+    if (error) {
+      sendJson(response, 400, { error });
+      return true;
+    }
+
+    const store = await readStore();
+    const result = applyInboxEmail(store.records, store.emails, payload, siteEmail);
 
     if (result.error) {
       sendJson(response, 400, { error: result.error });
       return true;
     }
 
-    sendJson(response, 201, { ok: true, ...result });
+    await writeStore(store);
+    sendJson(response, 201, { ok: true, record: result.record, email: result.email });
     return true;
   }
 
@@ -370,7 +269,11 @@ async function serveStatic(request, response, url) {
 const server = createServer(async (request, response) => {
   try {
     const url = new URL(request.url || "/", `http://${request.headers.host || "localhost"}`);
-    if (url.pathname.startsWith("/api/") && (await handleApi(request, response, url))) {
+    if (url.pathname.startsWith("/api/")) {
+      if (await handleApi(request, response, url)) {
+        return;
+      }
+      sendJson(response, 404, { error: "Not found" });
       return;
     }
     await serveStatic(request, response, url);
