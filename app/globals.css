@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+  /* Palette — DESIGN_SUPPLEMENT.md Section C */
+  --color-paper: #ffffff;
+  --color-surface: #f7f5f0;
+  --color-ink: #111111;
+  --color-muted: #5b5751;
+  --color-accent: #6b1f2f;
+  --color-hairline: #e3dfd4;
+
+  /* Type system */
+  --font-display: "Instrument Serif", Georgia, serif;
+  --font-sans: "Bricolage Grotesque Variable", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "SFMono-Regular", Menlo, monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-paper);
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply font-mono text-[11px] uppercase tracking-[0.18em];
+  }
+
+  .display {
+    @apply font-display leading-[0.96] tracking-[-0.015em];
+  }
+
+  .display em {
+    @apply italic text-accent;
+  }
+
+  .lede {
+    @apply max-w-[30em] text-[17px] leading-[1.55] text-muted md:text-[19px];
+  }
+
+  .btn-primary {
+    @apply inline-block bg-ink px-7 py-4 font-mono text-[12px] uppercase tracking-[0.18em] text-paper transition-colors duration-200 hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
+  }
+}
+
+/* Load animation — transform/opacity only, reduced-motion respected */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.fade-up-delay-1 {
+  animation-delay: 0.08s;
+}
+
+.fade-up-delay-2 {
+  animation-delay: 0.16s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .fade-up-delay-1,
+  .fade-up-delay-2 {
+    animation: none;
+  }
+}
