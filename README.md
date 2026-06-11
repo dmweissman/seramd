@@ -24,6 +24,23 @@ Open:
 
 `npm run dev` builds the Vite app into `dist/`, then starts `server.js` on port `4173`.
 
+## Vercel
+
+The app now lives at the GitHub repository root, so Vercel can use the default
+Vite settings:
+
+```bash
+npm ci
+npm run vite:build
+```
+
+The Vercel output directory is `dist`.
+
+This deploys the public Vite site. The local Node server still powers the
+waitlist API and `/admin` dashboard during local development; persistent
+production waitlist/admin storage on Vercel needs a serverless database-backed
+implementation.
+
 ## Checks
 
 ```bash

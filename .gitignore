@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.vercel/
+.tmp-*/
+.impeccable/
+data/*.json
+!data/.gitkeep
