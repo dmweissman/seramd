@@ -1,89 +1,55 @@
-import type { ReactNode } from "react";
+// The signature "diagnostic printout" protocol card from seramd-landing.html.
+const CheckIcon = () => (
+  <span className="check-line" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  </span>
+);
 
-type ProtocolRow = {
-  label: string;
-  status: string;
-  accent?: boolean;
-};
-
-type SpecimenCardProps = {
-  headLabel?: string;
-  headId?: string;
-  title?: ReactNode;
-  rows?: ProtocolRow[];
-  statusLabel?: string;
-  statusValue?: string;
-};
-
-// Signature element. Content mirrors the protocol card in
-// seramd-landing.html, rendered in the hairline/mono specimen treatment.
-const defaultRows: ProtocolRow[] = [
+const rows = [
   { label: "Biomarker panel reviewed", status: "Complete" },
   { label: "US physician oversight", status: "Signed" },
-  { label: "Computational lab processing", status: "AI supported", accent: true },
+  { label: "Computational lab processing", status: "AI supported", ai: true },
   { label: "Verified sourcing", status: "503A · Audited" },
   { label: "Calibrated dosing protocol", status: "Active" },
   { label: "Certificate of analysis", status: "On file" },
 ];
 
-export default function SpecimenCard({
-  headLabel = "Protocol · Sample",
-  headId = "SER-001",
-  title = (
-    <>
-      Calibrated for the <em className="text-accent">biology of one.</em>
-    </>
-  ),
-  rows = defaultRows,
-  statusLabel = "Status",
-  statusValue = "Calibrated",
-}: SpecimenCardProps) {
+export default function SpecimenCard() {
   return (
-    <article className="border border-hairline bg-paper">
-      <header className="flex items-baseline justify-between gap-4 border-b border-hairline bg-surface px-6 py-4">
-        <span className="eyebrow text-muted">{headLabel}</span>
-        <span className="eyebrow text-accent">{headId}</span>
-      </header>
-
-      <p className="display border-b border-hairline px-6 py-6 text-[24px] italic md:text-[26px]">
-        {title}
-      </p>
-
-      <ul className="m-0 list-none p-0">
-        {rows.map((row, index) => (
-          <li
-            key={row.label}
-            className={`flex items-baseline justify-between gap-4 px-6 py-3.5 ${
-              index > 0 ? "border-t border-dashed border-hairline" : ""
-            }`}
-          >
-            <span className="flex items-baseline gap-3 text-[14px] font-medium">
-              <span
-                className={`font-mono text-[10px] tracking-[0.14em] ${
-                  row.accent ? "text-accent" : "text-muted"
-                }`}
-              >
-                {String(index + 1).padStart(2, "0")}
-              </span>
+    <aside className="protocol" aria-label="Sample patient protocol preview">
+      <div className="protocol-head">
+        <span className="protocol-head-l">Protocol · Sample</span>
+        <span className="protocol-head-r">001 / 24</span>
+      </div>
+      <div className="protocol-title-row">
+        <p className="protocol-title">
+          Calibrated for the <span className="highlight">biology of one.</span>
+        </p>
+      </div>
+      <ul className="protocol-list">
+        {rows.map((row) => (
+          <li key={row.label} className={row.ai ? "protocol-list-ai" : undefined}>
+            <span className="protocol-list-l">
+              {row.ai ? <span className="ai-dot" aria-hidden="true" /> : <CheckIcon />}
               {row.label}
             </span>
-            <span
-              className={`font-mono text-[10.5px] uppercase tracking-[0.14em] ${
-                row.accent ? "text-accent" : "text-muted"
-              }`}
-            >
-              {row.status}
-            </span>
+            <span className="protocol-list-r">{row.status}</span>
           </li>
         ))}
       </ul>
-
-      <footer className="flex items-center justify-between border-t border-hairline bg-surface px-6 py-3.5">
-        <span className="eyebrow text-muted">{statusLabel}</span>
-        <span className="bg-accent-soft px-2.5 py-1 font-mono text-[10.5px] uppercase tracking-[0.22em] text-accent">
-          {statusValue}
-        </span>
-      </footer>
-    </article>
+      <div className="protocol-footer">
+        <span className="protocol-status-label">Status</span>
+        <span className="protocol-status-val">CALIBRATED</span>
+      </div>
+    </aside>
   );
 }

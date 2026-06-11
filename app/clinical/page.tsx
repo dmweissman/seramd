@@ -4,15 +4,20 @@ export const metadata: Metadata = { title: "Clinical" };
 
 export default function ClinicalPage() {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-20 md:py-28">
-      <p className="eyebrow text-accent">Clinical</p>
-      <h1 className="display mt-6 max-w-[12em] text-[44px] md:text-[64px]">
-        The clinical model.
-      </h1>
-      <p className="lede mt-8">
-        Lab verification, physician oversight, and bloodwork-calibrated
-        protocols. This page is built in Phase 3.
-      </p>
+    <section className="page-hero">
+      <div className="container">
+        <p className="eyebrow">
+          <span className="eyebrow-mark" />
+          Clinical
+        </p>
+        <h1 className="h-display" style={{ marginTop: 24 }}>
+          A clinical model built around <em>the individual.</em>
+        </h1>
+        <p className="section-lede">
+          Lab verification, physician oversight, and biomarker-calibrated
+          protocols. This page is built in Phase 3.
+        </p>
+      </div>
     </section>
   );
 }

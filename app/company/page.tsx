@@ -4,15 +4,20 @@ export const metadata: Metadata = { title: "Company" };
 
 export default function CompanyPage() {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-20 md:py-28">
-      <p className="eyebrow text-accent">Company</p>
-      <h1 className="display mt-6 max-w-[12em] text-[44px] md:text-[64px]">
-        Why SeraMD exists.
-      </h1>
-      <p className="lede mt-8">
-        The team, the thesis, and the operating standards. This page is built
-        in Phase 3.
-      </p>
+    <section className="page-hero">
+      <div className="container">
+        <p className="eyebrow">
+          <span className="eyebrow-mark" />
+          Company
+        </p>
+        <h1 className="h-display" style={{ marginTop: 24 }}>
+          On <em>building.</em>
+        </h1>
+        <p className="section-lede">
+          The team, the thesis, and the operating standards. This page is built
+          in Phase 3.
+        </p>
+      </div>
     </section>
   );
 }

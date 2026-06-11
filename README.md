@@ -21,12 +21,20 @@ conflict. Read both before changing any page.
 
 ## Brand system
 
-- Palette: clinical white `#FFFFFF`, surface `#F7F5F0`, ink `#111111`,
-  oxblood accent `#6B1F2F`, hairline `#E3DFD4`
-- Type: Instrument Serif (display), Bricolage Grotesque (body),
-  JetBrains Mono (eyebrows, labels, data)
-- Signature component: `components/SpecimenCard.tsx`
-- Tokens live in `app/globals.css` (Tailwind v4 `@theme`)
+Founder decision (2026-06-11): the site uses the vibrant warm-cream
+direction from `seramd-landing.html` (v4), superseding the oxblood palette
+in `BRIEF.md` Section 4. CTA framing is "Join the waitlist" (also a
+founder decision). All compliance/copy rules in `BRIEF.md` Section 8
+still apply unchanged.
+
+- Palette: warm cream `#F4EFE3`, surface white, ink `#1B1612`, terracotta
+  accent `#B85540`, plus green/amber status accents
+- Type: Fraunces (display), Bricolage Grotesque (body), JetBrains Mono
+  (eyebrows, labels, data)
+- Signature component: `components/SpecimenCard.tsx` (the "diagnostic
+  printout" protocol card)
+- Tokens live in `app/globals.css` (Tailwind v4 `@theme` + ported
+  reference styles)
 
 ## Build phases
 

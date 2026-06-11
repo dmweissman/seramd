@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import "@fontsource/instrument-serif";
-import "@fontsource/instrument-serif/400-italic.css";
 import "@fontsource-variable/bricolage-grotesque";
+import "@fontsource-variable/fraunces/full.css";
+import "@fontsource-variable/fraunces/full-italic.css";
 import "@fontsource-variable/jetbrains-mono";
 import "./globals.css";
 import Footer from "@/components/Footer";
@@ -9,11 +9,11 @@ import Nav from "@/components/Nav";
 
 export const metadata: Metadata = {
   title: {
-    default: "SeraMD — Peptide medicine without the guesswork",
+    default: "SeraMD — Medicine, calibrated to you.",
     template: "%s — SeraMD",
   },
   description:
-    "SeraMD is a clinical platform for peptide medicine: independently lab-verified batches, US physician oversight, and protocols calibrated to your bloodwork.",
+    "Verified peptide medicine, personalized to your biology and guided by real physicians.",
 };
 
 export default function RootLayout({

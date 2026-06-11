@@ -4,10 +4,15 @@ import { useState } from "react";
 
 type WaitlistFormProps = {
   source: "home-waitlist" | "charter";
+  buttonLabel?: string;
   center?: boolean;
 };
 
-export default function WaitlistForm({ source, center = false }: WaitlistFormProps) {
+export default function WaitlistForm({
+  source,
+  buttonLabel = "Join the waitlist",
+  center = false,
+}: WaitlistFormProps) {
   const [status, setStatus] = useState<"idle" | "loading" | "done">("idle");
   const [error, setError] = useState("");
 
@@ -40,43 +45,43 @@ export default function WaitlistForm({ source, center = false }: WaitlistFormPro
 
   if (status === "done") {
     return (
-      <p
-        className={`max-w-[480px] border border-hairline bg-accent-soft px-5 py-4 text-[14px] leading-[1.6] text-accent ${
-          center ? "mx-auto text-center" : ""
-        }`}
+      <div
+        className="form-confirm"
+        style={center ? { margin: "16px auto 0", textAlign: "left" } : undefined}
         role="status"
       >
         You&apos;re on the list. We&apos;ll be in touch as we approach launch.
-      </p>
+      </div>
     );
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      noValidate={false}
-      className={`flex max-w-[480px] flex-col gap-2.5 sm:flex-row sm:flex-wrap ${center ? "mx-auto" : ""}`}
-    >
-      <label className="sr-only" htmlFor={`email-${source}`}>
-        Email address
-      </label>
-      <input
-        id={`email-${source}`}
-        name="email"
-        type="email"
-        required
-        placeholder="your@email.com"
-        autoComplete="email"
-        className="flex-1 border border-hairline bg-paper px-5 py-3.5 text-[14px] text-ink transition-colors placeholder:text-muted focus:border-ink focus:outline-2 focus:outline-offset-2 focus:outline-accent"
-      />
-      <button type="submit" disabled={status === "loading"} className="btn-primary">
-        {status === "loading" ? "Submitting…" : "Request charter access"}
-      </button>
+    <>
+      <form
+        onSubmit={handleSubmit}
+        className={`hero-form${center ? " final-form" : ""}`}
+      >
+        <label className="sr-only" htmlFor={`email-${source}`}>
+          Email address
+        </label>
+        <input
+          id={`email-${source}`}
+          className="input"
+          type="email"
+          name="email"
+          placeholder="your@email.com"
+          autoComplete="email"
+          required
+        />
+        <button className="btn btn--lg" type="submit" disabled={status === "loading"}>
+          {status === "loading" ? "Joining…" : buttonLabel}
+        </button>
+      </form>
       {error ? (
-        <p className="basis-full text-[13px] text-accent" role="alert">
+        <p className="form-error" style={center ? { margin: "10px auto 0" } : undefined} role="alert">
           {error}
         </p>
       ) : null}
-    </form>
+    </>
   );
 }

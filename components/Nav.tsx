@@ -8,32 +8,30 @@ const links = [
 
 export default function Nav() {
   return (
-    <header className="sticky top-0 z-50 border-b border-hairline bg-paper">
-      <nav
-        aria-label="Primary"
-        className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-8 gap-y-3 px-6 py-4"
-      >
-        <Link href="/" className="font-display text-2xl leading-none">
-          SeraMD
+    <nav className="site-nav" aria-label="Primary">
+      <div className="nav-inner">
+        <Link href="/" className="wordmark">
+          Sera
+          <span className="wordmark-mark" />
+          MD
         </Link>
-        <div className="order-3 flex w-full flex-wrap items-center gap-x-7 gap-y-2 sm:order-none sm:w-auto">
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="eyebrow text-ink transition-colors hover:text-accent"
-            >
-              {link.label}
-            </Link>
-          ))}
+        <div className="nav-right">
+          <span className="nav-links">
+            {links.map((link) => (
+              <Link key={link.href} href={link.href} className="nav-link">
+                {link.label}
+              </Link>
+            ))}
+          </span>
+          <span className="live nav-live">
+            <span className="live-dot" />
+            Live
+          </span>
+          <Link href="/charter" className="btn">
+            Join the list
+          </Link>
         </div>
-        <Link
-          href="/charter"
-          className="btn-primary px-5 py-2.5 text-[11px]"
-        >
-          Request access
-        </Link>
-      </nav>
-    </header>
+      </div>
+    </nav>
   );
 }
