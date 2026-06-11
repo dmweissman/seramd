@@ -69,7 +69,7 @@ npm run vite:build
 ## Environment
 
 ```bash
-SITE_EMAIL=hello@seramd.com
+SITE_EMAIL=david@seramd.com
 ADMIN_TOKEN=choose-a-secret
 INBOX_EMAIL_TOKEN=
 PORT=4173

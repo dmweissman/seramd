@@ -246,10 +246,10 @@ Both AVIF and PNG versions are included where useful. AVIF is preferred by moder
 Returns:
 
 ```json
-{ "siteEmail": "hello@seramd.com" }
+{ "siteEmail": "david@seramd.com" }
 ```
 
-The value comes from `SITE_EMAIL` or defaults to `hello@seramd.com`.
+The value comes from `SITE_EMAIL` or defaults to `david@seramd.com`.
 
 ### `POST /api/waitlist`
 

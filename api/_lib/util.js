@@ -1,7 +1,7 @@
 const waitlistKey = "seramd:waitlist";
 const emailsKey = "seramd:emails";
 
-export const siteEmail = process.env.SITE_EMAIL || "hello@seramd.com";
+export const siteEmail = process.env.SITE_EMAIL || "david@seramd.com";
 
 export function sendJson(response, status, payload) {
   response.statusCode = status;
