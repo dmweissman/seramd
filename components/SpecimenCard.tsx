@@ -1,61 +1,89 @@
-type MetaEntry = {
+import type { ReactNode } from "react";
+
+type ProtocolRow = {
   label: string;
-  value: string;
+  status: string;
+  accent?: boolean;
 };
 
 type SpecimenCardProps = {
-  recordLabel?: string;
-  recordId?: string;
-  sequenceHeader?: string;
-  sequence?: string;
-  meta?: MetaEntry[];
+  headLabel?: string;
+  headId?: string;
+  title?: ReactNode;
+  rows?: ProtocolRow[];
+  statusLabel?: string;
+  statusValue?: string;
 };
 
-// Placeholder specimen data until seramd-landing.html supplies the real card
-// content. The sequence is illustrative notation, not a named compound.
-const defaultMeta: MetaEntry[] = [
-  { label: "Purity", value: "≥ 99% (HPLC)" },
-  { label: "Verification", value: "Independent third-party lab" },
-  { label: "Documentation", value: "COA with every shipment" },
-  { label: "Oversight", value: "US licensed physicians" },
+// Signature element. Content mirrors the protocol card in
+// seramd-landing.html, rendered in the hairline/mono specimen treatment.
+const defaultRows: ProtocolRow[] = [
+  { label: "Biomarker panel reviewed", status: "Complete" },
+  { label: "US physician oversight", status: "Signed" },
+  { label: "Computational lab processing", status: "AI supported", accent: true },
+  { label: "Verified sourcing", status: "503A · Audited" },
+  { label: "Calibrated dosing protocol", status: "Active" },
+  { label: "Certificate of analysis", status: "On file" },
 ];
 
 export default function SpecimenCard({
-  recordLabel = "Specimen Record",
-  recordId = "SER-001",
-  sequenceHeader = ">SER-001 · synthetic peptide · reference notation",
-  sequence = "GLSDP ATKSF VEQNR ILGDH TYWAE",
-  meta = defaultMeta,
+  headLabel = "Protocol · Sample",
+  headId = "SER-001",
+  title = (
+    <>
+      Calibrated for the <em className="text-accent">biology of one.</em>
+    </>
+  ),
+  rows = defaultRows,
+  statusLabel = "Status",
+  statusValue = "Calibrated",
 }: SpecimenCardProps) {
   return (
     <article className="border border-hairline bg-paper">
-      <header className="flex items-baseline justify-between gap-4 border-b border-hairline px-6 py-4">
-        <span className="eyebrow text-ink">{recordLabel}</span>
-        <span className="eyebrow text-accent">{recordId}</span>
+      <header className="flex items-baseline justify-between gap-4 border-b border-hairline bg-surface px-6 py-4">
+        <span className="eyebrow text-muted">{headLabel}</span>
+        <span className="eyebrow text-accent">{headId}</span>
       </header>
 
-      <div className="px-6 py-8">
-        <p className="font-mono text-[11px] tracking-[0.08em] text-muted">
-          {sequenceHeader}
-        </p>
-        <p className="mt-4 font-mono text-[15px] leading-[2] tracking-[0.32em] break-words md:text-[17px]">
-          {sequence}
-        </p>
-      </div>
+      <p className="display border-b border-hairline px-6 py-6 text-[24px] italic md:text-[26px]">
+        {title}
+      </p>
 
-      <dl className="grid grid-cols-1 border-t border-hairline sm:grid-cols-2">
-        {meta.map((entry, index) => (
-          <div
-            key={entry.label}
-            className={`px-6 py-4 ${index > 0 ? "border-t border-hairline sm:border-t-0" : ""} ${
-              index >= 2 ? "sm:border-t" : ""
-            } ${index % 2 === 1 ? "sm:border-l" : ""} sm:border-hairline`}
+      <ul className="m-0 list-none p-0">
+        {rows.map((row, index) => (
+          <li
+            key={row.label}
+            className={`flex items-baseline justify-between gap-4 px-6 py-3.5 ${
+              index > 0 ? "border-t border-dashed border-hairline" : ""
+            }`}
           >
-            <dt className="eyebrow text-muted">{entry.label}</dt>
-            <dd className="mt-1.5 text-[14px] leading-snug">{entry.value}</dd>
-          </div>
+            <span className="flex items-baseline gap-3 text-[14px] font-medium">
+              <span
+                className={`font-mono text-[10px] tracking-[0.14em] ${
+                  row.accent ? "text-accent" : "text-muted"
+                }`}
+              >
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              {row.label}
+            </span>
+            <span
+              className={`font-mono text-[10.5px] uppercase tracking-[0.14em] ${
+                row.accent ? "text-accent" : "text-muted"
+              }`}
+            >
+              {row.status}
+            </span>
+          </li>
         ))}
-      </dl>
+      </ul>
+
+      <footer className="flex items-center justify-between border-t border-hairline bg-surface px-6 py-3.5">
+        <span className="eyebrow text-muted">{statusLabel}</span>
+        <span className="bg-accent-soft px-2.5 py-1 font-mono text-[10.5px] uppercase tracking-[0.22em] text-accent">
+          {statusValue}
+        </span>
+      </footer>
     </article>
   );
 }
