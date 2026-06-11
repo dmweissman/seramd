@@ -4,15 +4,7 @@ const notifyTo = process.env.NOTIFY_EMAIL || "david@seramd.com";
 // address Resend accepts; swap to hello@seramd.com after DNS setup (Phase 5).
 const notifyFrom = process.env.NOTIFY_FROM || "SeraMD <onboarding@resend.dev>";
 
-export async function notifySignup({
-  email,
-  source,
-  detail,
-}: {
-  email: string;
-  source: string;
-  detail?: string;
-}) {
+async function sendNotification(subject: string, text: string) {
   if (!resendKey) {
     return;
   }
@@ -27,8 +19,8 @@ export async function notifySignup({
       body: JSON.stringify({
         from: notifyFrom,
         to: [notifyTo],
-        subject: `SeraMD signup: ${email}`,
-        text: `${email} joined via ${source}.${detail ? `\n\n${detail}` : ""}`,
+        subject,
+        text,
       }),
     });
 
@@ -36,7 +28,50 @@ export async function notifySignup({
       console.error(`Resend notification failed with status ${response.status}.`);
     }
   } catch (error) {
-    // Notification failure must never fail the signup itself.
+    // Notification failure must never fail the submission itself.
     console.error(error);
   }
+}
+
+export async function notifySignup({
+  email,
+  source,
+  detail,
+}: {
+  email: string;
+  source: string;
+  detail?: string;
+}) {
+  await sendNotification(
+    `SeraMD signup: ${email}`,
+    `${email} joined via ${source}.${detail ? `\n\n${detail}` : ""}`,
+  );
+}
+
+export async function notifyContact({
+  name,
+  email,
+  type,
+  organization,
+  message,
+}: {
+  name: string;
+  email: string;
+  type: string;
+  organization?: string;
+  message: string;
+}) {
+  await sendNotification(
+    `SeraMD ${type} inquiry: ${name}`,
+    [
+      `Name: ${name}`,
+      `Email: ${email}`,
+      organization ? `Organization: ${organization}` : null,
+      `Type: ${type}`,
+      "",
+      message,
+    ]
+      .filter((line) => line !== null)
+      .join("\n"),
+  );
 }
