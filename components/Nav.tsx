@@ -8,15 +8,15 @@ const links = [
 
 export default function Nav() {
   return (
-    <header className="border-b border-hairline">
+    <header className="sticky top-0 z-50 border-b border-hairline bg-paper">
       <nav
         aria-label="Primary"
-        className="mx-auto flex max-w-6xl flex-wrap items-baseline justify-between gap-x-8 gap-y-2 px-6 py-5"
+        className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-8 gap-y-3 px-6 py-4"
       >
         <Link href="/" className="font-display text-2xl leading-none">
           SeraMD
         </Link>
-        <div className="flex flex-wrap items-baseline gap-x-7 gap-y-2">
+        <div className="order-3 flex w-full flex-wrap items-center gap-x-7 gap-y-2 sm:order-none sm:w-auto">
           {links.map((link) => (
             <Link
               key={link.href}
@@ -26,13 +26,13 @@ export default function Nav() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/charter"
-            className="eyebrow text-accent transition-colors hover:text-ink"
-          >
-            Charter Access
-          </Link>
         </div>
+        <Link
+          href="/charter"
+          className="btn-primary px-5 py-2.5 text-[11px]"
+        >
+          Request access
+        </Link>
       </nav>
     </header>
   );

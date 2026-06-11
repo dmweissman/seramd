@@ -5,9 +5,10 @@
   --color-paper: #ffffff;
   --color-surface: #f7f5f0;
   --color-ink: #111111;
-  --color-muted: #5b5751;
+  --color-muted: #6b665f;
   --color-accent: #6b1f2f;
-  --color-hairline: #e3dfd4;
+  --color-accent-soft: #f3e8e8;
+  --color-hairline: #d8d4cc;
 
   /* Type system */
   --font-display: "Instrument Serif", Georgia, serif;
