@@ -7,13 +7,31 @@ import "./globals.css";
 import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
 
+const siteTitle = "SeraMD — Medicine, calibrated to you.";
+const siteDescription =
+  "Verified peptide medicine, personalized to your biomarkers and guided by US-licensed physicians.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://seramd.com"),
   title: {
-    default: "SeraMD — Medicine, calibrated to you.",
+    default: siteTitle,
     template: "%s — SeraMD",
   },
-  description:
-    "Verified peptide medicine, personalized to your biology and guided by real physicians.",
+  description: siteDescription,
+  openGraph: {
+    title: siteTitle,
+    description: siteDescription,
+    url: "https://seramd.com",
+    siteName: "SeraMD",
+    type: "website",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteTitle,
+    description: siteDescription,
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({
