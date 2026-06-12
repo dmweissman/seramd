@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SeraMD — Medicine, calibrated to you.</title>
+<meta name="description" content="Verified peptide medicine, personalized to your biology and guided by real physicians." />
+<meta property="og:title" content="SeraMD — Medicine, calibrated to you." />
+<meta property="og:description" content="Verified peptide medicine, personalized to your biology and guided by real physicians." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..700&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,30..100;1,9..144,300..600,30..100&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #F4EFE3;
+    --bg-elevated: #FAF5EA;
+    --surface: #FFFFFF;
+    --ink: #1B1612;
+    --ink-dark: #0F0C09;
+    --ink-soft: #2A2520;
+    --muted: #6E6357;
+    --muted-2: #8A8174;
+    --muted-3: #A89E8E;
+    --hairline: #E5DDC9;
+    --hairline-soft: #EDE6D2;
+    --hairline-faint: #F1ECDE;
+    --hairline-strong: #C5B89D;
+    --accent: #B85540;
+    --accent-deep: #8A3F2E;
+    --accent-soft: #F3E3DD;
+    --green: #2D5240;
+    --green-live: #4FC58A;
+    --green-soft: #E1EAE3;
+    --amber: #C68A2E;
+    --amber-soft: #F0E2C2;
+
+    --shadow-sm: 0 1px 2px rgba(27, 22, 18, 0.025), 0 2px 6px rgba(27, 22, 18, 0.025);
+    --shadow-md: 0 2px 4px rgba(27, 22, 18, 0.035), 0 8px 24px rgba(27, 22, 18, 0.04);
+    --shadow-lg: 0 4px 8px rgba(27, 22, 18, 0.045), 0 20px 50px rgba(27, 22, 18, 0.07);
+
+    --r-sm: 8px;
+    --r: 14px;
+    --r-lg: 20px;
+    --r-pill: 999px;
+
+    --pad: clamp(20px, 4vw, 40px);
+
+    --t-display: 'Fraunces', Georgia, serif;
+    --t-body: 'Bricolage Grotesque', system-ui, -apple-system, sans-serif;
+    --t-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--t-body);
+    font-size: 15px;
+    line-height: 1.65;
+    letter-spacing: 0.005em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  .container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 var(--pad);
+  }
+
+  /* ============== TYPE ROLES ============== */
+  .eyebrow {
+    font-family: var(--t-mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow-mark {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .h-display {
+    font-family: var(--t-display);
+    font-weight: 400;
+    line-height: 0.96;
+    letter-spacing: -0.03em;
+    font-variation-settings: "SOFT" 20, "opsz" 120;
+    color: var(--ink);
+    margin: 0;
+  }
+  .h-display em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 300;
+    font-variation-settings: "SOFT" 10, "opsz" 120, "slnt" -10;
+  }
+
+  .section-title {
+    font-family: var(--t-body);
+    font-weight: 600;
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    font-size: clamp(32px, 4.4vw, 52px);
+    margin: 0;
+    color: var(--ink);
+    max-width: 18ch;
+  }
+  .section-title em {
+    font-family: var(--t-display);
+    font-style: italic;
+    font-weight: 400;
+    font-variation-settings: "SOFT" 15, "opsz" 96, "slnt" -8;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+
+  .section-lede {
+    margin-top: 18px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 44em;
+    letter-spacing: 0.003em;
+  }
+
+  /* ============== NAV ============== */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(244, 239, 227, 0.88);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--hairline-soft);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px var(--pad);
+    max-width: 1240px; margin: 0 auto;
+  }
+  .wordmark {
+    font-family: var(--t-display);
+    font-weight: 500;
+    font-variation-settings: "SOFT" 20, "opsz" 24;
+    font-size: 23px;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-decoration: none;
+    display: inline-flex; align-items: baseline; gap: 5px;
+    line-height: 1;
+  }
+  .wordmark-mark {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
+    transform: translateY(-2px);
+  }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+  .nav-status {
+    display: none;
+    align-items: center;
+    font-family: var(--t-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .nav-status::before {
+    content: "";
+    display: inline-block;
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--accent);
+    margin-right: 8px;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+  @media (min-width: 720px) { .nav-status { display: inline-flex; } }
+
+  /* Live operational indicator */
+  .live {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--t-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+  .live-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--green-live);
+    box-shadow: 0 0 0 3px rgba(79, 197, 138, 0.14), 0 0 10px rgba(79, 197, 138, 0.5);
+    animation: live-pulse 2.4s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes live-pulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(79, 197, 138, 0.14), 0 0 8px rgba(79, 197, 138, 0.45); }
+    50%      { box-shadow: 0 0 0 6px rgba(79, 197, 138, 0.04), 0 0 14px rgba(79, 197, 138, 0.7); }
+  }
+  .nav-live { display: none; }
+  @media (min-width: 560px) { .nav-live { display: inline-flex; } }
+
+  /* ============== BUTTONS ============== */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 11px 22px;
+    background: var(--ink);
+    color: var(--bg);
+    border: 1px solid var(--ink);
+    font-family: var(--t-body);
+    font-size: 13.5px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: var(--r-pill);
+    transition:
+      background 0.5s var(--ease),
+      color 0.5s var(--ease),
+      border-color 0.5s var(--ease),
+      letter-spacing 0.5s var(--ease),
+      transform 0.4s var(--ease),
+      box-shadow 0.5s var(--ease);
+    will-change: transform;
+  }
+  .btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    letter-spacing: 0.005em;
+    transform: scale(0.99);
+    box-shadow: 0 8px 24px rgba(184, 85, 64, 0.18);
+  }
+  .btn--lg { padding: 15px 28px; font-size: 14px; }
+  .btn--outline {
+    background: transparent;
+    color: var(--ink);
+  }
+  .btn--outline:hover {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+
+  /* ============== HERO ============== */
+  .hero {
+    padding: clamp(48px, 8vw, 100px) 0 clamp(36px, 5vw, 56px);
+    position: relative;
+    border-bottom: 1px solid var(--hairline-faint);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  @media (min-width: 1024px) {
+    .hero-grid { grid-template-columns: 1.05fr 0.95fr; gap: 72px; }
+  }
+  .hero-eyebrow { margin-bottom: 28px; }
+  .hero-headline {
+    font-size: clamp(50px, 8.2vw, 104px);
+    max-width: 12ch;
+  }
+  .hero-lede {
+    margin-top: 24px;
+    max-width: 36em;
+    font-size: clamp(16px, 1.4vw, 18px);
+    line-height: 1.55;
+    color: var(--muted);
+    letter-spacing: 0.005em;
+  }
+  .hero-form {
+    margin-top: 36px;
+    display: flex; flex-direction: column; gap: 10px;
+    max-width: 480px;
+  }
+  @media (min-width: 560px) { .hero-form { flex-direction: row; } }
+
+  .input {
+    flex: 1;
+    padding: 14px 20px;
+    border: 1px solid var(--hairline-strong);
+    background: var(--surface);
+    font-family: var(--t-body);
+    font-size: 14px;
+    color: var(--ink);
+    outline: none;
+    border-radius: var(--r-pill);
+    transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    letter-spacing: 0.005em;
+  }
+  .input:focus { border-color: var(--ink); box-shadow: 0 0 0 4px rgba(184, 85, 64, 0.08); }
+  .input::placeholder { color: var(--muted-2); }
+
+  .form-fine {
+    margin-top: 18px;
+    font-family: var(--t-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .form-confirm {
+    margin-top: 14px;
+    padding: 12px 18px;
+    color: var(--accent-deep);
+    font-size: 13px;
+    border-radius: var(--r-sm);
+    background: var(--accent-soft);
+    display: none;
+    max-width: 480px;
+    letter-spacing: 0.01em;
+  }
+  .form-confirm.show { display: block; }
+
+  /* ============== PROTOCOL — DIAGNOSTIC PRINTOUT ============== */
+  .protocol {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    transform: perspective(1400px) rotateY(-0.8deg) rotateX(0.8deg);
+    transition: transform 0.8s var(--ease);
+    font-family: var(--t-mono);
+  }
+  .protocol:hover { transform: perspective(1400px) rotateY(0deg) rotateX(0deg) translateY(-4px); }
+
+  .protocol-head {
+    padding: 16px 22px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--hairline-soft);
+    background: var(--bg-elevated);
+  }
+  .protocol-head-l {
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: inline-flex; align-items: center; gap: 8px;
+    font-weight: 500;
+  }
+  .protocol-head-l::before {
+    content: "";
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--green-live);
+    box-shadow: 0 0 0 2px rgba(79, 197, 138, 0.18);
+    animation: live-pulse 2.4s ease-in-out infinite;
+  }
+  .protocol-head-r {
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .protocol-title-row {
+    padding: 26px 22px 22px;
+    border-bottom: 1px solid var(--hairline-soft);
+  }
+  .protocol-title {
+    font-family: var(--t-display);
+    font-style: italic;
+    font-weight: 300;
+    font-variation-settings: "SOFT" 15, "opsz" 96, "slnt" -8;
+    font-size: 26px;
+    line-height: 1.18;
+    letter-spacing: -0.022em;
+    color: var(--ink);
+    margin: 0;
+  }
+  .protocol-title .highlight { color: var(--accent); }
+
+  .protocol-list {
+    list-style: none;
+    margin: 0;
+    padding: 4px 0;
+    font-family: var(--t-body);
+  }
+  .protocol-list li {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 22px;
+    font-size: 13px;
+    border-bottom: 1px dashed var(--hairline-soft);
+    letter-spacing: 0.005em;
+  }
+  .protocol-list li:last-child { border-bottom: none; }
+  .protocol-list-l {
+    display: flex; align-items: center; gap: 11px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .check-line {
+    width: 12px; height: 12px;
+    color: var(--green);
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .check-line svg { width: 100%; height: 100%; }
+  .protocol-list-r {
+    font-family: var(--t-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    color: var(--muted-2);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* AI row variant */
+  .protocol-list-ai .ai-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--amber);
+    box-shadow: 0 0 0 3px var(--amber-soft);
+    animation: ai-pulse 1.8s ease-in-out infinite;
+    margin-left: 1px;
+    margin-right: 4px;
+    flex-shrink: 0;
+  }
+  @keyframes ai-pulse {
+    0%, 100% { box-shadow: 0 0 0 3px var(--amber-soft); opacity: 1; }
+    50%      { box-shadow: 0 0 0 5px rgba(198, 138, 46, 0.06); opacity: 0.75; }
+  }
+  .protocol-list-ai .protocol-list-r {
+    color: var(--amber);
+  }
+
+  .protocol-footer {
+    padding: 14px 22px;
+    background: var(--bg-elevated);
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid var(--hairline-soft);
+  }
+  .protocol-status-label {
+    font-family: var(--t-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    font-weight: 500;
+  }
+  .protocol-status-val {
+    font-family: var(--t-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--green);
+    background: rgba(45, 82, 64, 0.07);
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+
+  /* ============== TRUST BADGES ============== */
+  .trust-row {
+    padding: clamp(28px, 4vw, 44px) 0 clamp(36px, 5vw, 60px);
+  }
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 9px 16px;
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-pill);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--ink);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), border-color 0.4s var(--ease);
+    letter-spacing: 0.005em;
+  }
+  .badge:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); border-color: var(--accent-soft); }
+  .badge-icon {
+    width: 14px; height: 14px;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* ============== INTRO ============== */
+  .intro {
+    padding: clamp(40px, 6vw, 64px) 0;
+    background: var(--bg-elevated);
+    border-top: 1px solid var(--hairline-soft);
+    border-bottom: 1px solid var(--hairline-soft);
+  }
+  .intro-text {
+    font-family: var(--t-display);
+    font-style: italic;
+    font-weight: 300;
+    font-variation-settings: "SOFT" 15, "opsz" 96, "slnt" -8;
+    font-size: clamp(20px, 2.3vw, 28px);
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    max-width: 38ch;
+    margin: 0;
+  }
+  .intro-text .highlight { color: var(--accent); }
+
+  /* ============== SECTION BASE ============== */
+  section.block {
+    padding: clamp(60px, 8vw, 100px) 0;
+  }
+  .section-header {
+    max-width: 700px;
+    margin-bottom: 52px;
+  }
+  .section-header .eyebrow { margin-bottom: 18px; }
+
+  /* ============== PILLARS ============== */
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 800px) {
+    .pillars-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  }
+  .pillar-card {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-lg);
+    padding: 34px 30px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease), border-color 0.5s var(--ease);
+    display: flex; flex-direction: column;
+  }
+  .pillar-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent-soft);
+  }
+  .pillar-icon-wrap {
+    width: 42px; height: 42px;
+    border-radius: var(--r-sm);
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-bottom: 22px;
+  }
+  .pillar-icon-wrap svg { width: 20px; height: 20px; }
+  .pillar-tag {
+    font-family: var(--t-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    margin-bottom: 12px;
+  }
+  .pillar-title {
+    font-family: var(--t-body);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 1.15;
+    letter-spacing: -0.018em;
+    margin: 0 0 12px;
+    color: var(--ink);
+  }
+  .pillar-body {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0;
+    letter-spacing: 0.005em;
+  }
+
+  /* ============== HOW IT WORKS ============== */
+  .how-wrap {
+    background: var(--bg-elevated);
+    border-top: 1px solid var(--hairline-soft);
+    border-bottom: 1px solid var(--hairline-soft);
+  }
+  .how-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 800px) {
+    .how-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  }
+  .step-card {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-lg);
+    padding: 30px 26px;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    display: flex; flex-direction: column; gap: 14px;
+    transition: box-shadow 0.5s var(--ease), transform 0.5s var(--ease);
+  }
+  .step-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+  .step-head {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .step-num-pill {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 5px 11px;
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+    border-radius: var(--r-pill);
+    font-family: var(--t-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .step-icon {
+    width: 28px; height: 28px;
+    color: var(--muted-2);
+  }
+  .step-icon svg { width: 100%; height: 100%; }
+
+  .step-title {
+    font-family: var(--t-body);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 1.1;
+    letter-spacing: -0.018em;
+    margin: 0;
+    color: var(--ink);
+  }
+  .step-body {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0;
+    letter-spacing: 0.005em;
+  }
+
+  /* ============== PROOF / CERTAINTY ============== */
+  .proof-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 800px) {
+    .proof-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  }
+  .proof-block {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r);
+    padding: 26px 24px;
+    display: flex; flex-direction: column; gap: 13px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.4s var(--ease), transform 0.4s var(--ease);
+  }
+  .proof-block:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .proof-icon-row {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .proof-icon {
+    width: 28px; height: 28px;
+    border-radius: var(--r-sm);
+    background: var(--green-soft);
+    color: var(--green);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .proof-icon svg { width: 14px; height: 14px; }
+  .proof-tag {
+    font-family: var(--t-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+  }
+  .proof-title {
+    font-family: var(--t-body);
+    font-weight: 600;
+    font-size: 17.5px;
+    line-height: 1.2;
+    letter-spacing: -0.014em;
+    color: var(--ink);
+    margin: 0;
+  }
+  .proof-body {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0;
+    letter-spacing: 0.005em;
+  }
+
+  /* ============== THE DIAGNOSTIC STANDARD (COMPARISON) ============== */
+  .standard-section {
+    border-top: 1px solid var(--hairline-soft);
+  }
+  .standard-table {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  .standard-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    border-bottom: 1px solid var(--hairline-soft);
+  }
+  @media (min-width: 800px) {
+    .standard-row { grid-template-columns: 1.1fr 1.45fr 1.45fr; }
+  }
+  .standard-row:last-child { border-bottom: none; }
+
+  .standard-row--head { background: var(--bg-elevated); }
+  .standard-row--head .standard-cell {
+    padding-top: 18px; padding-bottom: 18px;
+  }
+
+  .standard-cell {
+    padding: 22px 24px;
+    border-right: 1px solid var(--hairline-soft);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .standard-cell:last-child { border-right: none; }
+  @media (max-width: 799px) {
+    .standard-cell { border-right: none; border-bottom: 1px solid var(--hairline-faint); }
+    .standard-row:last-child .standard-cell:last-child { border-bottom: none; }
+  }
+
+  .standard-cell--label {
+    background: var(--bg-elevated);
+  }
+  .standard-cell--label .standard-label-tag {
+    font-family: var(--t-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+  }
+  .standard-cell--label .standard-label-text {
+    font-family: var(--t-body);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .standard-marker {
+    display: inline-flex; align-items: center;
+    font-family: var(--t-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    width: fit-content;
+  }
+  .standard-marker--verified {
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 4px 10px;
+    border-radius: 3px;
+  }
+  .standard-marker--verified::before {
+    content: "✓ ";
+    margin-right: 4px;
+    font-family: var(--t-body);
+    font-weight: 600;
+  }
+  .standard-marker--muted {
+    color: var(--muted-2);
+    letter-spacing: 0.2em;
+  }
+  .standard-marker--dash {
+    color: var(--muted-3);
+    font-size: 14px;
+    letter-spacing: 0;
+    padding-left: 2px;
+  }
+
+  .standard-value {
+    font-family: var(--t-body);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink);
+    letter-spacing: -0.002em;
+    margin: 0;
+    font-weight: 500;
+  }
+  .standard-value--muted {
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  /* Heading style for column heads */
+  .standard-cell--head {
+    background: var(--bg-elevated);
+  }
+  .standard-head-mark {
+    font-family: var(--t-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    margin-bottom: 4px;
+  }
+  .standard-head-name {
+    font-family: var(--t-body);
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+    margin: 0;
+  }
+  .standard-cell--sera-head .standard-head-name { color: var(--accent); }
+  .standard-cell--other-head .standard-head-name { color: var(--muted); font-weight: 500; }
+
+  /* ============== PARTNERS (DARK) ============== */
+  .partners {
+    background: var(--ink-dark);
+    color: var(--bg);
+    border-top: 1px solid var(--ink-soft);
+    border-bottom: 1px solid var(--ink-soft);
+  }
+  .partners .eyebrow { color: var(--accent); }
+  .partners .eyebrow-mark { background: var(--accent); }
+  .partners .section-title { color: #F8F2E4; }
+  .partners .section-title em { color: var(--accent); }
+  .partners .section-lede { color: #B8AB97; max-width: 50em; }
+
+  .partner-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  @media (min-width: 600px) { .partner-grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1000px) { .partner-grid { grid-template-columns: repeat(4, 1fr); } }
+
+  .partner-card {
+    background: var(--ink-soft);
+    border: 1px solid #3A3530;
+    border-radius: var(--r);
+    padding: 26px 24px;
+    text-decoration: none;
+    color: inherit;
+    display: flex; flex-direction: column; gap: 12px;
+    transition: background 0.4s var(--ease), border-color 0.4s var(--ease), transform 0.4s var(--ease);
+    min-height: 180px;
+  }
+  .partner-card:hover {
+    background: #322C26;
+    border-color: var(--accent);
+    transform: translateY(-3px);
+  }
+  .partner-tag {
+    font-family: var(--t-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .partner-title {
+    font-family: var(--t-body);
+    font-weight: 600;
+    font-size: 16.5px;
+    line-height: 1.2;
+    letter-spacing: -0.014em;
+    color: #F8F2E4;
+    margin: 0;
+    flex: 1;
+  }
+  .partner-cta {
+    font-size: 12.5px;
+    color: #B8AB97;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: auto;
+    transition: color 0.3s var(--ease), gap 0.3s var(--ease);
+    letter-spacing: 0.005em;
+  }
+  .partner-card:hover .partner-cta { color: var(--accent); gap: 10px; }
+
+  /* ============== FINAL CTA ============== */
+  .final {
+    padding: clamp(72px, 11vw, 130px) 0;
+    text-align: center;
+  }
+  .final .eyebrow { justify-content: center; margin: 0 auto 26px; }
+  .final h2 {
+    font-family: var(--t-body);
+    font-weight: 600;
+    font-size: clamp(40px, 6.2vw, 76px);
+    line-height: 1;
+    letter-spacing: -0.032em;
+    margin: 0 auto 22px;
+    max-width: 16ch;
+    color: var(--ink);
+  }
+  .final h2 em {
+    font-family: var(--t-display);
+    font-style: italic;
+    font-weight: 400;
+    font-variation-settings: "SOFT" 15, "opsz" 144, "slnt" -8;
+    color: var(--accent);
+    letter-spacing: -0.025em;
+  }
+  .final-lede {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 32em;
+    margin: 0 auto;
+    line-height: 1.6;
+    letter-spacing: 0.005em;
+  }
+  .final-form {
+    margin: 32px auto 0;
+    max-width: 480px;
+  }
+
+  /* ============== FOOTER ============== */
+  footer {
+    border-top: 1px solid var(--hairline-soft);
+    padding: 32px 0 48px;
+    background: var(--bg-elevated);
+  }
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  @media (min-width: 800px) {
+    .footer-inner { grid-template-columns: 1fr auto; align-items: end; gap: 60px; }
+  }
+  .footer-l { display: flex; flex-direction: column; gap: 10px; }
+  .footer-wordmark {
+    font-family: var(--t-display);
+    font-weight: 500;
+    font-variation-settings: "SOFT" 20, "opsz" 24;
+    font-size: 19px;
+    letter-spacing: -0.018em;
+    color: var(--ink);
+  }
+  .footer-disclaimer {
+    font-size: 11.5px;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 60em;
+    letter-spacing: 0.005em;
+  }
+  .footer-meta {
+    font-family: var(--t-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ============== REVEAL ============== */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { animation: rise 0.9s var(--ease) both; }
+  .reveal--d1 { animation-delay: 0.04s; }
+  .reveal--d2 { animation-delay: 0.16s; }
+  .reveal--d3 { animation-delay: 0.30s; }
+  .reveal--d4 { animation-delay: 0.46s; }
+  .reveal--d5 { animation-delay: 0.62s; }
+
+</style>
+</head>
+<body>
+
+<!-- ========== NAV ========== -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="wordmark">Sera<span class="wordmark-mark"></span>MD</a>
+    <div class="nav-right">
+      <span class="nav-status">Early access opening soon</span>
+      <span class="live nav-live"><span class="live-dot"></span>Live</span>
+      <a href="#waitlist" class="btn">Join the list</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-content">
+      <p class="eyebrow hero-eyebrow reveal reveal--d1">
+        <span class="eyebrow-mark"></span>
+        Verified peptide medicine
+      </p>
+
+      <h1 class="h-display hero-headline reveal reveal--d2">
+        Medicine,<br/>
+        calibrated <em>to you.</em>
+      </h1>
+
+      <p class="hero-lede reveal reveal--d3">
+        Verified peptide medicine, personalized to your biomarkers and guided by US-licensed physicians.
+      </p>
+
+      <form class="hero-form reveal reveal--d4" id="hero-form" novalidate>
+        <input class="input" type="email" name="email" placeholder="your@email.com" aria-label="Email address" required />
+        <button class="btn btn--lg" type="submit">Join the waitlist</button>
+      </form>
+      <p class="form-fine reveal reveal--d4">Lab-verified · Physician-led · Calibrated to you</p>
+      <div class="form-confirm" id="hero-confirm">You're on the list. We'll be in touch as we approach launch.</div>
+    </div>
+
+    <!-- Protocol Preview — Diagnostic Printout -->
+    <aside class="protocol reveal reveal--d5" aria-label="Sample patient protocol preview">
+      <div class="protocol-head">
+        <span class="protocol-head-l">Protocol · Sample</span>
+        <span class="protocol-head-r">001 / 24</span>
+      </div>
+      <div class="protocol-title-row">
+        <p class="protocol-title">Calibrated for the <span class="highlight">biology of one.</span></p>
+      </div>
+      <ul class="protocol-list">
+        <li>
+          <span class="protocol-list-l">
+            <span class="check-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+            Biomarker panel reviewed
+          </span>
+          <span class="protocol-list-r">Complete</span>
+        </li>
+        <li>
+          <span class="protocol-list-l">
+            <span class="check-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+            US physician oversight
+          </span>
+          <span class="protocol-list-r">Signed</span>
+        </li>
+        <li class="protocol-list-ai">
+          <span class="protocol-list-l">
+            <span class="ai-dot"></span>
+            Computational Lab Processing
+          </span>
+          <span class="protocol-list-r">AI Optimized</span>
+        </li>
+        <li>
+          <span class="protocol-list-l">
+            <span class="check-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+            Verified sourcing
+          </span>
+          <span class="protocol-list-r">503A · Audited</span>
+        </li>
+        <li>
+          <span class="protocol-list-l">
+            <span class="check-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+            Calibrated dosing protocol
+          </span>
+          <span class="protocol-list-r">Active</span>
+        </li>
+        <li>
+          <span class="protocol-list-l">
+            <span class="check-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+            Certificate of analysis
+          </span>
+          <span class="protocol-list-r">On file</span>
+        </li>
+      </ul>
+      <div class="protocol-footer">
+        <span class="protocol-status-label">Status</span>
+        <span class="protocol-status-val">CALIBRATED</span>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Trust badges row -->
+  <div class="container trust-row">
+    <div class="badges">
+      <span class="badge">
+        <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+        US physician guided
+      </span>
+      <span class="badge">
+        <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"></path><path d="M14 9.3V1.99"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path></svg>
+        Lab verified batches
+      </span>
+      <span class="badge">
+        <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="m9 15 2 2 4-4"></path></svg>
+        Independent COA available
+      </span>
+      <span class="badge">
+        <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M3 12h2"></path><path d="M19 12h2"></path><path d="M12 3v2"></path><path d="M12 19v2"></path><path d="m5.6 5.6 1.4 1.4"></path><path d="m17 17 1.4 1.4"></path><path d="m5.6 18.4 1.4-1.4"></path><path d="m17 7 1.4-1.4"></path></svg>
+        Biomarker calibration
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== INTRO STRIP ========== -->
+<section class="intro">
+  <div class="container">
+    <p class="intro-text">
+      SeraMD is beginning with peptide-based care and metabolic optimization — built on <span class="highlight">verified sourcing, physician oversight, and personalized biomarker review.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ========== WHAT WE STAND ON ========== -->
+<section class="block">
+  <div class="container">
+    <header class="section-header">
+      <p class="eyebrow"><span class="eyebrow-mark"></span>What we stand on</p>
+      <h2 class="section-title">A different <em>standard.</em></h2>
+    </header>
+
+    <div class="pillars-grid">
+      <article class="pillar-card">
+        <div class="pillar-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <p class="pillar-tag">01 — Analytical safety</p>
+        <h3 class="pillar-title">Every batch, independently tested.</h3>
+        <p class="pillar-body">Third-party analytical testing, accessible certificates of analysis, and audited sourcing for every approved protocol.</p>
+      </article>
+
+      <article class="pillar-card">
+        <div class="pillar-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M16 14a6 6 0 0 0-8 0"/><path d="M5 20a8 8 0 0 1 14 0"/><path d="m17 11 2 2 4-4"/></svg>
+        </div>
+        <p class="pillar-tag">02 — Clinical decision support</p>
+        <h3 class="pillar-title">Guided by US physicians.</h3>
+        <p class="pillar-body">Licensed providers review biomarkers, intake, and medical history before any clinical decision is made.</p>
+      </article>
+
+      <article class="pillar-card">
+        <div class="pillar-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/><circle cx="12" cy="12" r="2.2" fill="currentColor"/></svg>
+        </div>
+        <p class="pillar-tag">03 — Calibrated dosing</p>
+        <h3 class="pillar-title">Calibrated to your biomarkers.</h3>
+        <p class="pillar-body">Protocols are calibrated to biomarkers, history, and clinical review — never one-size-fits-all tiers.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ========== HOW IT WORKS ========== -->
+<section class="block how-wrap">
+  <div class="container">
+    <header class="section-header">
+      <p class="eyebrow"><span class="eyebrow-mark"></span>How it works</p>
+      <h2 class="section-title">From biomarkers <em>to protocol.</em></h2>
+      <p class="section-lede">A supervised path from biomarker review to a clinically-decided protocol.</p>
+    </header>
+
+    <div class="how-grid">
+      <article class="step-card">
+        <div class="step-head">
+          <span class="step-num-pill">Step 01</span>
+          <span class="step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6.5L4 16a4 4 0 0 0 3.5 6h9A4 4 0 0 0 20 16l-5-7.5V2"/><line x1="6" y1="2" x2="18" y2="2"/><line x1="7" y1="14" x2="17" y2="14"/></svg>
+          </span>
+        </div>
+        <h3 class="step-title">Biomarker panel</h3>
+        <p class="step-body">Comprehensive bloodwork drawn at home or at a national lab to understand your biology.</p>
+      </article>
+
+      <article class="step-card">
+        <div class="step-head">
+          <span class="step-num-pill">Step 02</span>
+          <span class="step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M5 20a8 8 0 0 1 14 0"/></svg>
+          </span>
+        </div>
+        <h3 class="step-title">Physician review</h3>
+        <p class="step-body">A US-licensed provider reviews your biomarkers, intake, and clinical history.</p>
+      </article>
+
+      <article class="step-card">
+        <div class="step-head">
+          <span class="step-num-pill">Step 03</span>
+          <span class="step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/></svg>
+          </span>
+        </div>
+        <h3 class="step-title">Calibrated protocol</h3>
+        <p class="step-body">If appropriate, a verified protocol is calibrated to your biology and dispensed by an audited 503A pharmacy.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CERTAINTY / PROOF ========== -->
+<section class="block">
+  <div class="container">
+    <header class="section-header">
+      <p class="eyebrow"><span class="eyebrow-mark"></span>Why it matters</p>
+      <h2 class="section-title">Built for patients who want <em>certainty,</em> not guesswork.</h2>
+    </header>
+
+    <div class="proof-grid">
+      <article class="proof-block">
+        <div class="proof-icon-row">
+          <span class="proof-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </span>
+          <span class="proof-tag">01 · Verified</span>
+        </div>
+        <h3 class="proof-title">Audited sourcing.</h3>
+        <p class="proof-body">Every approved protocol traces back to an audited 503A supply chain and independently tested batches.</p>
+      </article>
+
+      <article class="proof-block">
+        <div class="proof-icon-row">
+          <span class="proof-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M5 20a8 8 0 0 1 14 0"/></svg>
+          </span>
+          <span class="proof-tag">02 · Reviewed</span>
+        </div>
+        <h3 class="proof-title">Licensed clinical review.</h3>
+        <p class="proof-body">US-licensed physicians review every biomarker profile before any clinical decision is made.</p>
+      </article>
+
+      <article class="proof-block">
+        <div class="proof-icon-row">
+          <span class="proof-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-6"/></svg>
+          </span>
+          <span class="proof-tag">03 · Calibrated</span>
+        </div>
+        <h3 class="proof-title">Biomarker-driven calibration.</h3>
+        <p class="proof-body">Our platform organizes biomarker insights for physician review — calibrating dosing to the individual.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ========== THE DIAGNOSTIC STANDARD (COMPARISON) ========== -->
+<section class="block standard-section">
+  <div class="container">
+    <header class="section-header">
+      <p class="eyebrow"><span class="eyebrow-mark"></span>The Diagnostic Standard</p>
+      <h2 class="section-title">A higher <em>baseline.</em></h2>
+      <p class="section-lede">How verified personalized medicine differs from standard telehealth.</p>
+    </header>
+
+    <div class="standard-table">
+      <!-- Header row -->
+      <div class="standard-row standard-row--head">
+        <div class="standard-cell standard-cell--label">
+          <span class="standard-head-mark">Discipline</span>
+        </div>
+        <div class="standard-cell standard-cell--head standard-cell--sera-head">
+          <span class="standard-head-mark">Sera · MD</span>
+          <h3 class="standard-head-name">SeraMD</h3>
+        </div>
+        <div class="standard-cell standard-cell--head standard-cell--other-head">
+          <span class="standard-head-mark">Reference</span>
+          <h3 class="standard-head-name">Standard Telehealth</h3>
+        </div>
+      </div>
+
+      <!-- Row 1 -->
+      <div class="standard-row">
+        <div class="standard-cell standard-cell--label">
+          <span class="standard-label-tag">01</span>
+          <p class="standard-label-text">Batch Purity Testing</p>
+        </div>
+        <div class="standard-cell">
+          <span class="standard-marker standard-marker--verified">Verified</span>
+          <p class="standard-value">100% Independent COA Available</p>
+        </div>
+        <div class="standard-cell">
+          <span class="standard-marker standard-marker--dash">—</span>
+          <p class="standard-value standard-value--muted">Varies / Undisclosed</p>
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="standard-row">
+        <div class="standard-cell standard-cell--label">
+          <span class="standard-label-tag">02</span>
+          <p class="standard-label-text">Clinical Onboarding</p>
+        </div>
+        <div class="standard-cell">
+          <span class="standard-marker standard-marker--verified">Verified</span>
+          <p class="standard-value">AI Diagnostic Analysis + US Physician</p>
+        </div>
+        <div class="standard-cell">
+          <span class="standard-marker standard-marker--dash">—</span>
+          <p class="standard-value standard-value--muted">Asynchronous Form Review</p>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="standard-row">
+        <div class="standard-cell standard-cell--label">
+          <span class="standard-label-tag">03</span>
+          <p class="standard-label-text">Sourcing Infrastructure</p>
+        </div>
+        <div class="standard-cell">
+          <span class="standard-marker standard-marker--verified">Verified</span>
+          <p class="standard-value">Audited 503A Compounding Only</p>
+        </div>
+        <div class="standard-cell">
+          <span class="standard-marker standard-marker--dash">—</span>
+          <p class="standard-value standard-value--muted">Broker Network Sourcing</p>
+        </div>
+      </div>
+
+      <!-- Row 4 -->
+      <div class="standard-row">
+        <div class="standard-cell standard-cell--label">
+          <span class="standard-label-tag">04</span>
+          <p class="standard-label-text">Dosing Calibration</p>
+        </div>
+        <div class="standard-cell">
+          <span class="standard-marker standard-marker--verified">Verified</span>
+          <p class="standard-value">Dynamic Biomarker Personalization</p>
+        </div>
+        <div class="standard-cell">
+          <span class="standard-marker standard-marker--dash">—</span>
+          <p class="standard-value standard-value--muted">One-Size-Fits-All Tiers</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PARTNERS (DARK) ========== -->
+<section class="block partners">
+  <div class="container">
+    <header class="section-header">
+      <p class="eyebrow"><span class="eyebrow-mark"></span>For partners</p>
+      <h2 class="section-title">Building the network <em>behind better care.</em></h2>
+      <p class="section-lede">We're assembling a trusted network of clinicians, pharmacy partners, diagnostic labs, and strategic investors to help shape a better standard for personalized medicine.</p>
+    </header>
+
+    <div class="partner-grid">
+      <a href="mailto:partners@seramd.com?subject=Physician%20network" class="partner-card">
+        <span class="partner-tag">Clinical</span>
+        <h3 class="partner-title">Clinicians &amp; Medical Director</h3>
+        <span class="partner-cta">Get in touch →</span>
+      </a>
+      <a href="mailto:partners@seramd.com?subject=Pharmacy%20partnership" class="partner-card">
+        <span class="partner-tag">Pharmacy</span>
+        <h3 class="partner-title">503A compounding partners</h3>
+        <span class="partner-cta">Get in touch →</span>
+      </a>
+      <a href="mailto:partners@seramd.com?subject=Lab%20partnership" class="partner-card">
+        <span class="partner-tag">Laboratory</span>
+        <h3 class="partner-title">Diagnostic &amp; analytical labs</h3>
+        <span class="partner-cta">Get in touch →</span>
+      </a>
+      <a href="mailto:investors@seramd.com?subject=Investor%20inquiry" class="partner-card">
+        <span class="partner-tag">Capital</span>
+        <h3 class="partner-title">Strategic investors</h3>
+        <span class="partner-cta">Get in touch →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FINAL CTA ========== -->
+<section class="final" id="waitlist">
+  <div class="container">
+    <p class="eyebrow"><span class="eyebrow-mark"></span>Waitlist</p>
+    <h2>Be the first <em>to know.</em></h2>
+    <p class="final-lede">Join the waitlist to be notified when SeraMD is ready.</p>
+
+    <form class="hero-form final-form" id="final-form" novalidate>
+      <input class="input" type="email" name="email" placeholder="your@email.com" aria-label="Email address" required />
+      <button class="btn btn--lg" type="submit">Join the waitlist</button>
+    </form>
+    <p class="form-fine" style="text-align: center; margin-top: 18px;">Launching soon</p>
+    <div class="form-confirm" id="final-confirm" style="margin: 16px auto 0; text-align: left;">You're on the list. We'll be in touch as we approach launch.</div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-l">
+      <span class="footer-wordmark">SeraMD</span>
+      <p class="footer-disclaimer">
+        SeraMD is a forthcoming telehealth service. Availability will vary by state and is subject to regulatory clearance. The content of this site is for informational purposes only and does not constitute medical advice. Statements have not been evaluated by the FDA. SeraMD is not intended to diagnose, treat, cure, or prevent any disease. SeraMD is currently in pre-launch and is not offering medical services or products for sale.
+      </p>
+    </div>
+    <span class="footer-meta">© 2026 SeraMD</span>
+  </div>
+</footer>
+
+<script>
+  function wireForm(formId, confirmId) {
+    const form = document.getElementById(formId);
+    const confirm = document.getElementById(confirmId);
+    if (!form) return;
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const input = form.querySelector('input[type="email"]');
+      if (!input.checkValidity()) { input.focus(); return; }
+      // TODO: wire to Resend + Upstash endpoint built in Claude Code Phase 2
+      confirm.style.display = 'block';
+      confirm.classList.add('show');
+      form.style.display = 'none';
+    });
+  }
+  wireForm('hero-form', 'hero-confirm');
+  wireForm('final-form', 'final-confirm');
+</script>
+
+</body>
+</html>

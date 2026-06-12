@@ -1,100 +1,71 @@
-# Seramd
+# SeraMD
 
-Seramd is a coming-soon website for a bloodwork-powered peptide telehealth platform. The project includes:
+SeraMD is a clinical platform for peptide medicine: independently
+lab-verified batches, US physician oversight, and protocols calibrated to
+bloodwork. The brand promise is **"Peptide medicine without the guesswork."**
 
-- A React/Vite public landing page.
-- A small Node HTTP server.
-- A local waitlist API.
-- A local admin/email dashboard at `/admin`.
-- shadcn-style UI primitives under `src/components/ui`.
+This repository is the public site — a Next.js (App Router) build with
+Tailwind CSS and TypeScript.
 
-The company name is **Seramd**. Do not reintroduce any old placeholder branding in this project.
+**Source of truth for design and copy:** `BRIEF.md` (pending upload) and
+`DESIGN_SUPPLEMENT.md`. The supplement overrides the brief where they
+conflict. Read both before changing any page.
 
-## Quick Start
+## Pages
+
+- `/` — home (hero + SpecimenCard)
+- `/clinical` — clinical model (Phase 3)
+- `/partnerships` — pharmacy / physician / research / capital (Phase 3)
+- `/company` — team and thesis (Phase 3)
+- `/charter` — charter list signup, the site's primary CTA (Phase 3)
+
+## Brand system
+
+Founder decision (2026-06-11): the site uses the vibrant warm-cream
+direction from `seramd-landing.html` (v4), superseding the oxblood palette
+in `BRIEF.md` Section 4. CTA framing is "Join the waitlist" (also a
+founder decision). All compliance/copy rules in `BRIEF.md` Section 8
+still apply unchanged.
+
+- Palette: warm cream `#F4EFE3`, surface white, ink `#1B1612`, terracotta
+  accent `#B85540`, plus green/amber status accents
+- Type: Fraunces (display), Bricolage Grotesque (body), JetBrains Mono
+  (eyebrows, labels, data)
+- Signature component: `components/SpecimenCard.tsx` (the "diagnostic
+  printout" protocol card)
+- Tokens live in `app/globals.css` (Tailwind v4 `@theme` + ported
+  reference styles)
+
+## Build phases
+
+1. Foundation: scaffold, fonts, palette, Nav, Footer, SpecimenCard ✓
+2. Home page (match `seramd-landing.html` reference)
+3. `/clinical`, `/partnerships`, `/company`, `/charter`
+4. Polish, Lighthouse, mobile QA
+5. DNS / domain pointing
+
+Each phase stops for review before the next begins.
+
+## Quick start
 
 ```bash
 npm install
-npm run dev
+npm run dev      # dev server
+npm run build    # production build
+npm run check    # TypeScript check
 ```
 
-Open:
+## Deployment
 
-- Public site: `http://localhost:4173`
-- Admin dashboard: `http://localhost:4173/admin`
+Vercel auto-detects Next.js; no special configuration. Environment
+variables (needed once the charter intake form is wired):
 
-`npm run dev` builds the Vite app into `dist/`, then starts `server.js` on port `4173`.
+- `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` — signup storage
+  (connect Upstash via the Vercel Marketplace)
+- `ADMIN_TOKEN` — required before any admin endpoint will respond
+- `SITE_EMAIL` — defaults to `david@seramd.com`
 
-## Vercel
-
-The app now lives at the GitHub repository root, so Vercel can use the default
-Vite settings:
-
-```bash
-npm ci
-npm run vite:build
-```
-
-The Vercel output directory is `dist`.
-
-This deploys the public Vite site. The local Node server still powers the
-waitlist API and `/admin` dashboard during local development; persistent
-production waitlist/admin storage on Vercel needs a serverless database-backed
-implementation.
-
-## Checks
-
-```bash
-npm run check
-npm run vite:build
-```
-
-`npm run check` validates the Node scripts and TypeScript.
-
-## Environment
-
-All environment variables are optional for local development.
-
-```bash
-SITE_EMAIL=hello@seramd.com
-ADMIN_TOKEN=
-INBOX_EMAIL_TOKEN=
-PORT=4173
-```
-
-- `SITE_EMAIL`: email address displayed on the site and admin dashboard.
-- `ADMIN_TOKEN`: when set, admin API routes require `Authorization: Bearer <token>`.
-- `INBOX_EMAIL_TOKEN`: when set, `POST /api/inbox` requires `Authorization: Bearer <token>`.
-- `PORT`: local server port.
-
-## Runtime Data
-
-The server writes local runtime data to:
-
-- `data/waitlist.json`
-- `data/emails.json`
-
-Those JSON files are ignored by git because they can contain visitor emails and message history. `data/.gitkeep` keeps the folder in the repo.
-
-## Important Files
-
-- `src/App.tsx`: primary React landing page.
-- `src/index.css`: Tailwind 4 CSS, theme tokens, and page-specific styling.
-- `src/components/ui/*`: shadcn-style primitives used by the React page.
-- `server.js`: static file server plus waitlist/admin/inbox APIs.
-- `admin.html`, `admin.css`, `admin.js`: local admin/email dashboard.
-- `index.html`: Vite shell and static fallback markup.
-- `assets/*`: visual assets used by the page.
-- `PRODUCT.md`, `DESIGN.md`: product and design-system context.
-- `NOTES.md`: detailed handoff notes for future agents.
-
-## GitHub Upload Notes
-
-Do not upload these generated/local folders:
-
-- `node_modules/`
-- `dist/`
-- `.tmp-*/`
-- `.impeccable/`
-- `data/*.json`
-
-They are already covered by `.gitignore`. A future agent should run `npm install` and `npm run dev` after cloning.
+Signup/contact domain logic from the v1 site is preserved in
+`lib/waitlist.js` and `lib/storage.js` for reuse as Next.js route handlers.
+The v1 Vite coming-soon site lives in git history before the
+"Phase 1: Next.js scaffold" commit.
