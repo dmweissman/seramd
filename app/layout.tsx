@@ -11,8 +11,18 @@ const siteTitle = "SeraMD — Medicine, calibrated to you.";
 const siteDescription =
   "Verified peptide medicine, personalized to your biomarkers and guided by US-licensed physicians.";
 
+// Until seramd.com points at Vercel, absolute OG URLs must resolve to the
+// deployment actually serving the page, or link previews break.
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_ENV === "production" && process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "https://seramd.com");
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://seramd.com"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: siteTitle,
     template: "%s — SeraMD",
@@ -21,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: siteTitle,
     description: siteDescription,
-    url: "https://seramd.com",
+    url: siteUrl,
     siteName: "SeraMD",
     type: "website",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
