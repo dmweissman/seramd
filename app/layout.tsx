@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { businessSchema } from "@/lib/schema";
 import "@fontsource/cormorant-garamond/400.css";
 import "@fontsource/cormorant-garamond/500.css";
 import "@fontsource/cormorant-garamond/400-italic.css";
@@ -44,22 +45,6 @@ export const metadata: Metadata = {
   },
 };
 
-const organizationJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "SERA MD",
-  url: "https://seramd.com",
-  description: siteDescription,
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "2 Kings Highway East",
-    addressLocality: "Middletown",
-    addressRegion: "NJ",
-    postalCode: "07748",
-    addressCountry: "US",
-  },
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -69,7 +54,7 @@ export default function RootLayout({
         {children}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(businessSchema) }}
         />
       </body>
     </html>

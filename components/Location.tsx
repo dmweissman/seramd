@@ -8,7 +8,7 @@ export default function Location() {
         <Reveal className="location-media">
           <Image
             src="/sera-middletown-location.webp"
-            alt="Architectural light and shadow on an ivory facade"
+            alt="Aerial view of the Navesink River and Monmouth County, New Jersey"
             fill
             sizes="(min-width: 1000px) 50vw, 100vw"
             style={{ objectFit: "cover" }}

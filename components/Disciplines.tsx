@@ -7,21 +7,21 @@ const disciplines = [
     title: "Advanced Aesthetics",
     copy: "Next-generation lifting, laser, regenerative, and skin-renewal technologies sourced from leading international markets.",
     image: "/sera-aesthetics.webp",
-    alt: "Soft directional light across a stone surface",
+    alt: "Close-up of an advanced laser handpiece during facial skin treatment",
   },
   {
     num: "02",
     title: "Surgical",
-    copy: "A private surgical environment designed for select cosmetic procedures with complete pre- and post-operative continuity.",
+    copy: "A private surgical suite, planned and in development, for select cosmetic procedures with complete pre- and post-operative continuity — opening upon licensure.",
     image: "/sera-surgical-suite.webp",
-    alt: "Low light across a dark clinical interior",
+    alt: "Surgical light overhead in a modern operating suite",
   },
   {
     num: "03",
     title: "Longevity Medicine",
     copy: "Advanced diagnostics, hormone optimization, metabolic care, and personalized programs designed to improve how patients feel as well as how they look.",
     image: "/sera-longevity-diagnostics.webp",
-    alt: "Warm light falling across a neutral surface",
+    alt: "Blood sample analysis in a clinical diagnostics laboratory",
   },
 ];
 
@@ -62,6 +62,13 @@ export default function Disciplines() {
             </Reveal>
           ))}
         </div>
+
+        <Reveal>
+          <p className="capability-note">
+            The surgical program is in development and will begin only upon
+            completion of all required state licensing and accreditation.
+          </p>
+        </Reveal>
       </div>
     </section>
   );
