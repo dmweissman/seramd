@@ -15,14 +15,6 @@ export default function Footer() {
             Middletown, NJ 07748
           </address>
           <nav className="footer-links" aria-label="Footer">
-            <a
-              className="footer-link"
-              href="https://www.instagram.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Instagram
-            </a>
             <a className="footer-link" href="mailto:david@seramd.com">
               Contact
             </a>
