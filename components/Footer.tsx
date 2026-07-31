@@ -1,41 +1,51 @@
-import Link from "next/link";
-
-const links = [
-  { href: "/clinical", label: "Clinical" },
-  { href: "/partnerships", label: "Partnerships" },
-  { href: "/company", label: "Company" },
-  { href: "/charter", label: "Join the list" },
-];
-
 export default function Footer() {
   return (
     <footer className="site-footer">
-      <div className="container footer-inner">
-        <div className="footer-l">
-          <span className="footer-wordmark">SeraMD</span>
-          <nav aria-label="Footer" className="footer-links">
-            {links.map((link) => (
-              <Link key={link.href} href={link.href} className="footer-link">
-                {link.label}
-              </Link>
-            ))}
-            <a href="mailto:david@seramd.com" className="footer-link">
+      <div className="container">
+        <div className="footer-grid">
+          <div>
+            <p className="footer-wordmark">Sera·MD</p>
+            <p className="footer-tagline">
+              Aesthetic Medicine · Surgery · Longevity
+            </p>
+          </div>
+          <address className="footer-address">
+            2 Kings Highway East
+            <br />
+            Middletown, NJ 07748
+          </address>
+          <nav className="footer-links" aria-label="Footer">
+            <a
+              className="footer-link"
+              href="https://www.instagram.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Instagram
+            </a>
+            <a className="footer-link" href="mailto:david@seramd.com">
               Contact
             </a>
+            <a className="footer-link" href="/privacy">
+              Privacy
+            </a>
+            <a className="footer-link" href="/terms">
+              Terms
+            </a>
           </nav>
-          <p className="footer-disclaimer">
-            SeraMD is a forthcoming telehealth service. Availability will vary
-            by state and is subject to regulatory clearance. The content of
-            this site is for informational purposes only and does not
-            constitute medical advice. Statements have not been evaluated by
-            the FDA. SeraMD is not intended to diagnose, treat, cure, or
-            prevent any disease. SeraMD is currently in pre-launch and is not
-            offering medical services or products for sale.
-          </p>
         </div>
-        <span className="footer-meta">
-          © {new Date().getFullYear()} SeraMD
-        </span>
+
+        <div className="footer-legal">
+          <p className="footer-disclaimer">
+            SERA MD is currently in development and is not yet providing
+            medical services. Information presented on this website is for
+            general informational purposes only and does not constitute
+            medical advice. Services, providers, technologies, and opening
+            dates remain subject to clinical, legal, licensing, and regulatory
+            review.
+          </p>
+          <p className="footer-copyright">© 2026 SERA MD. All rights reserved.</p>
+        </div>
       </div>
     </footer>
   );

@@ -1,10 +1,17 @@
-const resendKey = process.env.RESEND_API_KEY;
-const notifyTo = process.env.NOTIFY_EMAIL || "david@seramd.com";
-// Until seramd.com is verified in Resend, the onboarding sender is the only
-// address Resend accepts; swap to hello@seramd.com after DNS setup (Phase 5).
-const notifyFrom = process.env.NOTIFY_FROM || "SeraMD <onboarding@resend.dev>";
+import { notifyEmail } from "@/lib/storage";
 
-async function sendNotification(subject: string, text: string) {
+const resendKey = process.env.RESEND_API_KEY;
+// Until seramd.com is verified in Resend, the onboarding sender is the only
+// address Resend accepts; swap after email DNS is configured.
+const notifyFrom = process.env.NOTIFY_FROM || "SERA MD <onboarding@resend.dev>";
+
+export async function notifyLead(lead: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  interest: string;
+}) {
   if (!resendKey) {
     return;
   }
@@ -18,9 +25,15 @@ async function sendNotification(subject: string, text: string) {
       },
       body: JSON.stringify({
         from: notifyFrom,
-        to: [notifyTo],
-        subject,
-        text,
+        to: [notifyEmail],
+        subject: `SERA MD founding access: ${lead.firstName} ${lead.lastName} (${lead.interest})`,
+        text: [
+          `Name: ${lead.firstName} ${lead.lastName}`,
+          `Email: ${lead.email}`,
+          `Mobile: ${lead.phone}`,
+          `Primary interest: ${lead.interest}`,
+          `Consent to email/SMS: yes`,
+        ].join("\n"),
       }),
     });
 
@@ -28,50 +41,7 @@ async function sendNotification(subject: string, text: string) {
       console.error(`Resend notification failed with status ${response.status}.`);
     }
   } catch (error) {
-    // Notification failure must never fail the submission itself.
+    // Notification failure must never fail the lead capture itself.
     console.error(error);
   }
-}
-
-export async function notifySignup({
-  email,
-  source,
-  detail,
-}: {
-  email: string;
-  source: string;
-  detail?: string;
-}) {
-  await sendNotification(
-    `SeraMD signup: ${email}`,
-    `${email} joined via ${source}.${detail ? `\n\n${detail}` : ""}`,
-  );
-}
-
-export async function notifyContact({
-  name,
-  email,
-  type,
-  organization,
-  message,
-}: {
-  name: string;
-  email: string;
-  type: string;
-  organization?: string;
-  message: string;
-}) {
-  await sendNotification(
-    `SeraMD ${type} inquiry: ${name}`,
-    [
-      `Name: ${name}`,
-      `Email: ${email}`,
-      organization ? `Organization: ${organization}` : null,
-      `Type: ${type}`,
-      "",
-      message,
-    ]
-      .filter((line) => line !== null)
-      .join("\n"),
-  );
 }
