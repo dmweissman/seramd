@@ -1,4 +1,5 @@
 import BrandStatement from "@/components/BrandStatement";
+import Capabilities from "@/components/Capabilities";
 import Disciplines from "@/components/Disciplines";
 import Footer from "@/components/Footer";
 import FoundingAccessForm from "@/components/FoundingAccessForm";
@@ -16,6 +17,7 @@ export default function HomePage() {
         <Hero />
         <InstituteIntroduction />
         <Disciplines />
+        <Capabilities />
         <GlobalStandard />
         <BrandStatement />
         <Location />

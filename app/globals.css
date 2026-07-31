@@ -552,6 +552,56 @@ select:focus-visible {
   color: var(--muted-on-light);
 }
 
+/* Capabilities */
+.capability-list {
+  list-style: none;
+  margin: clamp(48px, 6vw, 72px) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border-top: 1px solid var(--hairline-light);
+}
+@media (min-width: 760px) {
+  .capability-list {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 64px;
+  }
+}
+.capability {
+  display: flex;
+  gap: 22px;
+  align-items: baseline;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--hairline-light);
+}
+.capability-num {
+  color: var(--champagne);
+  flex-shrink: 0;
+  padding-top: 4px;
+}
+.capability-title {
+  font-family: var(--t-display);
+  font-size: 23px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.capability-copy {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--muted-on-light);
+  max-width: 34em;
+}
+.capability-note {
+  margin: clamp(40px, 5vw, 56px) 0 0;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--muted-on-light);
+  max-width: 70em;
+}
+
 /* Global standard */
 .global-grid {
   display: grid;
