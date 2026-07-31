@@ -35,10 +35,11 @@ export default function GlobalStandard() {
             <p className="body-copy" style={{ marginTop: 30 }}>
               Some of the world&apos;s most advanced aesthetic platforms and
               protocols emerge internationally years before they become widely
-              available in the United States. SERA MD is being designed to
-              identify, evaluate, and introduce the next generation of
-              aesthetic medicine through appropriate clinical and regulatory
-              pathways.
+              available in the United States — from polynucleotide (PDRN and
+              PN) regenerative science to next-generation energy devices.
+              SERA MD is being designed to identify, evaluate, and introduce
+              the next generation of aesthetic medicine through appropriate
+              clinical and regulatory pathways.
             </p>
           </Reveal>
           <Reveal delay={240}>
