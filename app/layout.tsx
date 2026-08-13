@@ -9,7 +9,7 @@ import "./globals.css";
 
 const siteTitle = "SERA MD | Aesthetic Medicine & Longevity in Middletown, NJ";
 const siteDescription =
-  "SERA MD is a physician-led aesthetic medicine, cosmetic surgery, and longevity institute coming soon to Middletown, New Jersey.";
+  "SERA MD is a physician-led aesthetic medicine, regenerative, and longevity institute coming soon to Middletown, New Jersey.";
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||

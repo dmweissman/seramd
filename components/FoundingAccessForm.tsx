@@ -5,7 +5,7 @@ import Reveal from "@/components/Reveal";
 
 const interests = [
   "Advanced Aesthetics",
-  "Cosmetic Surgery",
+  "Regenerative Medicine",
   "Longevity Medicine",
   "Founding Membership",
   "Physician or Clinical Partnership",
@@ -40,6 +40,10 @@ export default function FoundingAccessForm() {
       setStatus("idle");
       setError(caught instanceof Error ? caught.message : "Something went wrong.");
     }
+  }
+
+  if (status === "done") {
+    // handled below
   }
 
   return (

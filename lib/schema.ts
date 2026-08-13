@@ -6,7 +6,7 @@ export const businessSchema = {
   name: "SERA MD",
   alternateName: "Sera MD Aesthetic Medicine & Longevity",
   description:
-    "SERA MD is a physician-led aesthetic medicine, cosmetic surgery, and longevity institute coming soon to Middletown, New Jersey.",
+    "SERA MD is a physician-led aesthetic medicine, regenerative, and longevity institute coming soon to Middletown, New Jersey.",
   url: "https://www.seramd.com",
   email: "david@seramd.com",
   image: "https://www.seramd.com/og-image.png",
@@ -28,13 +28,13 @@ export const businessSchema = {
     { "@type": "AdministrativeArea", name: "Monmouth County, NJ" },
     { "@type": "State", name: "New Jersey" },
   ],
-  medicalSpecialty: ["PlasticSurgery", "Dermatology"],
+  medicalSpecialty: ["Dermatology"],
   knowsAbout: [
     "aesthetic medicine",
-    "cosmetic surgery",
     "longevity medicine",
     "laser skin treatment",
     "regenerative medicine",
+    "hormone optimization",
   ],
   sameAs: [],
 } as const;

@@ -11,15 +11,15 @@ const disciplines = [
   },
   {
     num: "02",
-    title: "Surgical",
-    copy: "A private surgical suite, planned and in development, for select cosmetic procedures with complete pre- and post-operative continuity — opening upon licensure.",
-    image: "/sera-surgical-suite.webp",
-    alt: "Surgical light overhead in a modern operating suite",
+    title: "Regeneration",
+    copy: "Laser-assisted regenerative protocols, injectable skin boosters, and microneedling — designed to repair, restore, and rebuild from within, introduced through appropriate regulatory pathways.",
+    image: "/sera-hero-clinic.webp",
+    alt: "Laser-assisted skin treatment performed at a physician-led clinic",
   },
   {
     num: "03",
     title: "Longevity Medicine",
-    copy: "Advanced diagnostics, hormone optimization, metabolic care, and personalized programs designed to improve how patients feel as well as how they look.",
+    copy: "A comprehensive physician exam with advanced diagnostics, hormone optimization, and personalized programs designed to improve how patients feel as well as how they look.",
     image: "/sera-longevity-diagnostics.webp",
     alt: "Blood sample analysis in a clinical diagnostics laboratory",
   },
@@ -63,12 +63,6 @@ export default function Disciplines() {
           ))}
         </div>
 
-        <Reveal>
-          <p className="capability-note">
-            The surgical program is in development and will begin only upon
-            completion of all required state licensing and accreditation.
-          </p>
-        </Reveal>
       </div>
     </section>
   );

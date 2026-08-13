@@ -6,7 +6,7 @@ export default function Footer() {
           <div>
             <p className="footer-wordmark">Sera·MD</p>
             <p className="footer-tagline">
-              Aesthetic Medicine · Surgery · Longevity
+              Aesthetic Medicine · Regeneration · Longevity
             </p>
           </div>
           <address className="footer-address">
