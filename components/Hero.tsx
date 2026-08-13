@@ -6,33 +6,34 @@ export default function Hero() {
       <div className="hero-media" aria-hidden="true">
         <Image
           src="/sera-hero-clinic.webp"
-          alt="Laser skin treatment performed at a physician-led aesthetic clinic"
+          alt=""
           fill
           priority
           sizes="100vw"
           style={{ objectFit: "cover", objectPosition: "center 38%" }}
         />
       </div>
-      <div className="hero-overlay" aria-hidden="true" />
-      <div className="hero-content">
-        <span className="label rise">Middletown, New Jersey · Opening Soon</span>
-        <h1 className="display hero-headline rise rise--d1">
-          The future of looking younger—and living <em>younger.</em>
+      <div className="hero-inner">
+        <span className="eyebrow rise">Middletown, NJ · Opening Soon</span>
+        <h1 className="display rise rise--1">
+          The future of aesthetics &amp; <span className="accent">longevity</span> medicine.
         </h1>
-        <p className="hero-lede rise rise--d2">
-          Seoul-grade aesthetic technology, advanced longevity medicine, and
-          physician-led care in one private institute.
+        <p className="hero-sub rise rise--2">
+          Sourced from Seoul, Paris, and Monaco. Built for Monmouth County.
         </p>
-        <div className="hero-actions rise rise--d3">
+        <p className="hero-tagline rise rise--3">
+          Look younger<span className="sep">/</span>Feel younger
+          <span className="sep">/</span>Measure younger
+        </p>
+        <div className="hero-actions rise rise--4">
           <a href="#join" className="btn">
-            Join the Founding List
+            Join Founding List
           </a>
-          <a href="#institute" className="text-link" style={{ color: "var(--stone)" }}>
+          <a href="#difference" className="btn btn--ghost">
             Explore the Vision
           </a>
         </div>
       </div>
-      <div className="hero-scroll" aria-hidden="true" />
     </section>
   );
 }

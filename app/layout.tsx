@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
 import { businessSchema } from "@/lib/schema";
-import "@fontsource/cormorant-garamond/400.css";
-import "@fontsource/cormorant-garamond/500.css";
-import "@fontsource/cormorant-garamond/400-italic.css";
-import "@fontsource/cormorant-garamond/500-italic.css";
-import "@fontsource-variable/manrope";
+import "@fontsource-variable/inter";
 import "./globals.css";
 
-const siteTitle = "SERA MD | Aesthetic Medicine & Longevity in Middletown, NJ";
+const siteTitle = "SERA MD | Aesthetic & Longevity Medicine in Monmouth County, NJ";
 const siteDescription =
-  "SERA MD is a physician-led aesthetic medicine, regenerative, and longevity institute coming soon to Middletown, New Jersey.";
+  "A physician-led aesthetic medicine, regenerative, and longevity institute coming soon to Middletown, New Jersey. Sourced from Seoul, Paris, and Monaco.";
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||
@@ -26,9 +22,7 @@ export const metadata: Metadata = {
     template: "%s | SERA MD",
   },
   description: siteDescription,
-  alternates: {
-    canonical: "/",
-  },
+  alternates: { canonical: "/" },
   openGraph: {
     title: siteTitle,
     description: siteDescription,
