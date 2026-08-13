@@ -42,10 +42,6 @@ export default function FoundingAccessForm() {
     }
   }
 
-  if (status === "done") {
-    // handled below
-  }
-
   return (
     <section className="section founding on-dark" id="join">
       <div className="container founding-inner">
