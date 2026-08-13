@@ -6,7 +6,7 @@ export default function Footer() {
           <div>
             <p className="footer-wordmark">Sera·MD</p>
             <p className="footer-tagline">
-              Aesthetic Medicine · Surgery · Longevity
+              Aesthetic Medicine · Regeneration · Longevity
             </p>
           </div>
           <address className="footer-address">
@@ -35,6 +35,12 @@ export default function Footer() {
             medical advice. Services, providers, technologies, and opening
             dates remain subject to clinical, legal, licensing, and regulatory
             review.
+          </p>
+          <p className="footer-disclaimer" style={{ marginTop: 20 }}>
+            Photography: BalikianFacialPlasticSurgery (CC BY 4.0) · Tyler Frew
+            MD (CC BY-SA 4.0) · National Eye Institute (CC BY 2.0) · Antony-22
+            (CC BY-SA 4.0) · Matt Kieffer (CC BY-SA 2.0), via Wikimedia
+            Commons. Images edited (tone/crop).
           </p>
           <p className="footer-copyright">© 2026 SERA MD. All rights reserved.</p>
         </div>

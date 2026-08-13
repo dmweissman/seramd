@@ -14,8 +14,8 @@ export default function GlobalStandard() {
       <div className="container global-grid">
         <Reveal className="global-media">
           <Image
-            src="/sera-surgical-suite.webp"
-            alt="Directional light across a dark clinical interior"
+            src="/sera-global-seoul.webp"
+            alt="Seoul skyline at night from Namsan Mountain"
             fill
             sizes="(min-width: 1000px) 50vw, 100vw"
             style={{ objectFit: "cover" }}

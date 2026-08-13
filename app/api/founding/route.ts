@@ -5,7 +5,7 @@ import { readLeads, storageConfigured, withinRateLimit, writeLeads } from "@/lib
 
 const interests = new Set([
   "Advanced Aesthetics",
-  "Cosmetic Surgery",
+  "Regenerative Medicine",
   "Longevity Medicine",
   "Founding Membership",
   "Physician or Clinical Partnership",

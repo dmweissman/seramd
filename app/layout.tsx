@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { businessSchema } from "@/lib/schema";
 import "@fontsource/cormorant-garamond/400.css";
 import "@fontsource/cormorant-garamond/500.css";
 import "@fontsource/cormorant-garamond/400-italic.css";
@@ -8,7 +9,7 @@ import "./globals.css";
 
 const siteTitle = "SERA MD | Aesthetic Medicine & Longevity in Middletown, NJ";
 const siteDescription =
-  "SERA MD is a physician-led aesthetic medicine, cosmetic surgery, and longevity institute coming soon to Middletown, New Jersey.";
+  "SERA MD is a physician-led aesthetic medicine, regenerative, and longevity institute coming soon to Middletown, New Jersey.";
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||
@@ -44,22 +45,6 @@ export const metadata: Metadata = {
   },
 };
 
-const organizationJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "SERA MD",
-  url: "https://seramd.com",
-  description: siteDescription,
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "2 Kings Highway East",
-    addressLocality: "Middletown",
-    addressRegion: "NJ",
-    postalCode: "07748",
-    addressCountry: "US",
-  },
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -69,7 +54,7 @@ export default function RootLayout({
         {children}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(businessSchema) }}
         />
       </body>
     </html>

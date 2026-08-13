@@ -5,7 +5,7 @@ import Reveal from "@/components/Reveal";
 
 const interests = [
   "Advanced Aesthetics",
-  "Cosmetic Surgery",
+  "Regenerative Medicine",
   "Longevity Medicine",
   "Founding Membership",
   "Physician or Clinical Partnership",

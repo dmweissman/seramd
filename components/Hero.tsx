@@ -6,11 +6,11 @@ export default function Hero() {
       <div className="hero-media" aria-hidden="true">
         <Image
           src="/sera-hero-clinic.webp"
-          alt=""
+          alt="Laser skin treatment performed at a physician-led aesthetic clinic"
           fill
           priority
           sizes="100vw"
-          style={{ objectFit: "cover" }}
+          style={{ objectFit: "cover", objectPosition: "center 38%" }}
         />
       </div>
       <div className="hero-overlay" aria-hidden="true" />
