@@ -4,7 +4,7 @@ const stats = [
   {
     label: "Status",
     value: "Opening soon",
-    sub: "2 Kings Highway East, Middletown, NJ",
+    sub: "Monmouth County, New Jersey",
   },
   {
     label: "Model",

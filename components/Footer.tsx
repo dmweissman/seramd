@@ -21,9 +21,9 @@ export default function Footer() {
           <div className="footer-col">
             <p className="footer-col-h">Institute</p>
             <address>
-              2 Kings Highway East
+              Monmouth County
               <br />
-              Middletown, NJ 07748
+              New Jersey
             </address>
             <a href="#join">Join the founding list</a>
           </div>

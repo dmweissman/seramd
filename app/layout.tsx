@@ -5,7 +5,7 @@ import "./globals.css";
 
 const siteTitle = "SERA MD | Aesthetic & Longevity Medicine in Monmouth County, NJ";
 const siteDescription =
-  "A physician-led aesthetic medicine, regenerative, and longevity institute coming soon to Middletown, New Jersey. Sourced from Seoul, Paris, and Monaco.";
+  "A physician-led aesthetic medicine, regenerative, and longevity institute coming soon to Monmouth County, New Jersey. Sourced from Seoul, Paris, and Monaco.";
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||

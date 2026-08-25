@@ -14,7 +14,7 @@ export default function Hero() {
         />
       </div>
       <div className="hero-inner">
-        <span className="eyebrow rise">Middletown, NJ · Opening Soon</span>
+        <span className="eyebrow rise">Monmouth County, NJ · Opening Soon</span>
         <h1 className="display rise rise--1">
           The future of aesthetics &amp; <span className="accent">longevity</span> medicine.
         </h1>
