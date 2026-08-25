@@ -6,23 +6,16 @@ export const businessSchema = {
   name: "SERA MD",
   alternateName: "Sera MD Aesthetic Medicine & Longevity",
   description:
-    "SERA MD is a physician-led aesthetic medicine, regenerative, and longevity institute coming soon to Middletown, New Jersey.",
+    "SERA MD is a physician-led aesthetic medicine, regenerative, and longevity institute coming soon to Monmouth County, New Jersey.",
   url: "https://www.seramd.com",
   email: "david@seramd.com",
   image: "https://www.seramd.com/og-image.png",
   logo: "https://www.seramd.com/og-image.png",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "2 Kings Highway East",
-    addressLocality: "Middletown",
+    addressLocality: "Monmouth County",
     addressRegion: "NJ",
-    postalCode: "07748",
     addressCountry: "US",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: 40.3895,
-    longitude: -74.1099,
   },
   areaServed: [
     { "@type": "AdministrativeArea", name: "Monmouth County, NJ" },

@@ -5,9 +5,13 @@ import { readLeads, storageConfigured, withinRateLimit, writeLeads } from "@/lib
 
 const interests = new Set([
   "Advanced Aesthetics",
+  "Regenerative Science",
+  "Longevity & Hormone Care",
+  "Founding Membership",
+  "Investment or Partnership",
+  // legacy values kept valid so older cached clients don't error
   "Regenerative Medicine",
   "Longevity Medicine",
-  "Founding Membership",
   "Physician or Clinical Partnership",
   "Investment or Strategic Partnership",
 ]);

@@ -4,13 +4,21 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const links = [
-  { href: "#institute", label: "The Institute" },
-  { href: "#disciplines", label: "Disciplines" },
-  { href: "#location", label: "Location" },
+  { href: "#difference", label: "The Difference" },
+  { href: "#technology", label: "Technology" },
+  { href: "#model", label: "The Model" },
 ];
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -21,28 +29,28 @@ export default function Header() {
 
   return (
     <>
-      <header className="site-header">
+      <header className="header" data-scrolled={scrolled}>
         <div className="header-inner">
           <Link href="/" className="wordmark">
             Sera<span className="dot">·</span>MD
           </Link>
-          <nav className="header-nav" aria-label="Primary">
-            {links.map((link) => (
-              <a key={link.href} href={link.href} className="header-link">
-                {link.label}
+          <nav className="nav" aria-label="Primary">
+            {links.map((l) => (
+              <a key={l.href} href={l.href}>
+                {l.label}
               </a>
             ))}
-            <a href="#join" className="btn header-cta">
-              Join the List
-            </a>
           </nav>
+          <a href="#join" className="btn header-cta">
+            Join Founding List
+          </a>
           <button
             type="button"
-            className="menu-button"
+            className="menu-btn"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}
-            onClick={() => setOpen((value) => !value)}
+            onClick={() => setOpen((v) => !v)}
           >
             <span />
             <span />
@@ -52,14 +60,13 @@ export default function Header() {
       </header>
 
       <div id="mobile-menu" className={`mobile-menu${open ? " open" : ""}`} aria-hidden={!open}>
-        <span className="label">Sera MD · Middletown, NJ</span>
-        {links.map((link) => (
-          <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
-            {link.label}
+        {links.map((l) => (
+          <a key={l.href} href={l.href} onClick={() => setOpen(false)}>
+            {l.label}
           </a>
         ))}
         <a href="#join" onClick={() => setOpen(false)}>
-          Join the List
+          Join Founding List
         </a>
       </div>
     </>

@@ -1,13 +1,10 @@
-import BrandStatement from "@/components/BrandStatement";
-import Capabilities from "@/components/Capabilities";
-import Disciplines from "@/components/Disciplines";
+import Difference from "@/components/Difference";
 import Footer from "@/components/Footer";
 import FoundingAccessForm from "@/components/FoundingAccessForm";
-import GlobalStandard from "@/components/GlobalStandard";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import InstituteIntroduction from "@/components/InstituteIntroduction";
-import Location from "@/components/Location";
+import Model from "@/components/Model";
+import Technology from "@/components/Technology";
 
 export default function HomePage() {
   return (
@@ -15,12 +12,9 @@ export default function HomePage() {
       <Header />
       <main>
         <Hero />
-        <InstituteIntroduction />
-        <Disciplines />
-        <Capabilities />
-        <GlobalStandard />
-        <BrandStatement />
-        <Location />
+        <Difference />
+        <Technology />
+        <Model />
         <FoundingAccessForm />
       </main>
       <Footer />
